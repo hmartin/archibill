@@ -1,0 +1,21 @@
+<!-- 
+  This template gets placed in the Pet tab's <nav-view> directive.
+  It was wired up in the app config (app.js) 
+  The 'pets' data comes from its $scope within PetIndexCtrl (controller.js)
+-->
+<view title="'Archibill.it'">
+  <content has-header="true" >
+      <button class="button button-full button-balanced" ng-click="openInvitationDialog()">
+          take picture
+      </button>
+      <a class="button button-full button-balanced" href="#/tab/manage">
+          manage category
+      </a>
+      <a class="button button-full button-balanced" href="#/tab/option">
+          option
+      </a>
+      <a class="button button-full button-balanced" href="#/tab/send">
+          send me all archive
+      </a>
+  </content>
+</view>

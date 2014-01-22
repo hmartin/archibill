@@ -23,4 +23,19 @@ angular.module('starter.services', [])
       return pets[petId];
     }
   }
+})
+.service('MyService', function($http) {
+    var myData = null;
+
+    var promise = $http.get('http://izidot.com/json.json').success(function (data) {
+        myData = data;
+    });
+
+    return {
+        promise:promise,
+        doStuff: function () {
+            return myData;//.getSomeData();
+        }
+    };
 });
+
