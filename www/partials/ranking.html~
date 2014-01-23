@@ -1,9 +1,0 @@
-<input ng-model="query">
-
-<ul class="places">
-    <li ng-repeat="place in places | filter:query | orderBy:orderProp | limitTo:quantity" class="thumbnail">
-            <a href="#/places/{{place.id}}">{{place.title}}</a><br>
-            <a href="#/places/{{place.id}}">{{place.address}}</a>
-            <p>{{place.dist}} km</p>
-        </li>
-</ul>

@@ -49,6 +49,7 @@
     <gap:splash gap:platform="winphone" src="res/screen/windows-phone/screen-portrait.jpg" />
     <feature name="http://api.phonegap.com/1.0/file" />
     <access origin="*" />
-    <access uri="*" subdomains="true" />
+    <access subdomains="true" uri="*" />
     <access origin="http://127.0.0.1*" />
+    <content src="index.html" />
 </widget>

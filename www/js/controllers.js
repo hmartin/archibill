@@ -1,12 +1,14 @@
 angular.module('starter.controllers', ['ionic'])
 
 
-    .controller('home', function($scope, $stateParams, $ionicModal) {
+    .controller('home', function($scope, $stateParams, $ionicModal, $ionicPlatform) {
 
+        $ionicPlatform.ready(function() {
+            pictureSource=navigator.camera.PictureSourceType;
+            destinationType=navigator.camera.DestinationType;
+        });
         //var db = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
         //db.transaction(populateDB, errorCB, successCB);
-        //pictureSource=navigator.camera.PictureSourceType;
-        //destinationType=navigator.camera.DestinationType;
 
         $ionicModal.fromTemplateUrl('templates/tips.html', function(modal) {
             $scope.modal = modal;
@@ -20,12 +22,12 @@ angular.module('starter.controllers', ['ionic'])
         }
 
         $scope.closeModal = function() {
-            $scope.modal.hide();
             navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
                 quality: 40,
                 correctOrientation: 1,
                 allowEdit: true,
                 destinationType: navigator.camera.DestinationType.FILE_URI  });
+            $scope.modal.hide();
         };
     })
 
@@ -53,7 +55,13 @@ angular.module('starter.controllers', ['ionic'])
 
 
 
+function onPhotoDataSuccess(imageURI) {
+    uri = imageURI;
+}
 
+function onFail(message) {
+    alert('Failed because: ' + message);
+}
 
 
 
