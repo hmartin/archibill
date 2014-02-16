@@ -1,10 +1,20 @@
-<!-- 
-  This template gets placed in the Pet tab's <nav-view> directive.
-  It was wired up in the app config (app.js) 
-  The 'pets' data comes from its $scope within PetIndexCtrl (controller.js)
--->
+
+
 <view title="'Manage Category'">
   <content has-header="true"  padding="true">
-Manage Cate
+      <div class="list">
+
+              <div ng-repeat="item in categories" item="item" class="item item-button-right">
+                  <span ng-if="item.level" style="margin-left:15px;float:left">&nbsp;</span>
+                  {{ item.name }}
+                  <button class="button button-positive">
+                      <i class="icon-right ion-android-trash"></i>
+                  </button>
+              </div>
+          </div>
+
+    <div class="button button-outline button-balanced"  ng-click="createCategoryModal()">
+        <i class="icon-left ion-plus-round"></i> New category
+    </div>
   </content>
 </view>

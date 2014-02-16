@@ -5,6 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
+
+var db = window.openDatabase("Checkbill", "1.0", "Checkbill Info", 200000);
 angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', 'starter.directives'])
 
 
@@ -61,7 +63,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
           url: '/like',
           views: {
               'adopt-tab': {
-                  templateUrl: 'templates/adopt.html'
+                  templateUrl: 'templates/like.html'
               }
           }
       })

@@ -1,23 +1,23 @@
 angular.module('starter.controllers', ['ionic'])
 
-
     .controller('home', function($scope, $stateParams, $ionicModal, $ionicPlatform) {
 
         $ionicPlatform.ready(function() {
             pictureSource=navigator.camera.PictureSourceType;
             destinationType=navigator.camera.DestinationType;
         });
-        //var db = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
-        //db.transaction(populateDB, errorCB, successCB);
 
-        $ionicModal.fromTemplateUrl('templates/tips.html', function(modal) {
+
+        db.transaction(populateDB);
+
+        $ionicModal.fromTemplateUrl('templates/modals/tips.html', function(modal) {
             $scope.modal = modal;
         }, {
             scope: $scope,
             animation: 'slide-in-up'
         });
 
-        $scope.openInvitationDialog = function () {
+        $scope.openTipsDialog = function () {
             $scope.modal.show();
         }
 
@@ -41,9 +41,45 @@ angular.module('starter.controllers', ['ionic'])
         $scope.email = '<input type="text" placeholder="'+window.localStorage.getItem("email")+'">';
     })
 
-    .controller('manage', function($scope, $stateParams) {
-        window.localStorage.setItem("email", 'arol@free.fr');
 
+    /********************** MANAGE CATEGORY ******************************/
+    .controller('manage', function($scope, $stateParams, $ionicModal) {
+
+        $ionicModal.fromTemplateUrl('templates/modals/createCategory.html',
+            function(modal) { $scope.modal = modal; },
+            {
+                scope: $scope,
+                animation: 'slide-in-up'
+            }
+        );
+
+        $scope.createCategoryModal = function () {
+            $scope.modal.show();
+        }
+        $scope.rootOnly = function(categorie)
+        {
+            if(categorie.level == 0 )
+            {
+                return true;
+            }
+            return false;
+        };
+        function getCategories(level) {
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM Category WHERE level <= '+level+' ORDER BY parent_id, level', [], querySuccess, null);
+            });
+        }
+
+        function querySuccess(tx, results) {
+            console.log(results);
+            $scope.categories =new Array();
+            for (var i=0; i < results.rows.length; i++){
+                $scope.categories[i]  = results.rows.item(i);
+            }
+
+            $scope.$apply(); //trigger digest
+        }
+        getCategories(2);
     })
 
 
@@ -57,6 +93,10 @@ angular.module('starter.controllers', ['ionic'])
 
 function onPhotoDataSuccess(imageURI) {
     uri = imageURI;
+    /* asynchr post
+    save to bdd
+    suggest cat
+     */
 }
 
 function onFail(message) {
@@ -66,16 +106,17 @@ function onFail(message) {
 
 
 function populateDB(tx) {
-    tx.executeSql('DROP TABLE IF EXISTS DEMO');
-    tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
-    tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
-    tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
-}
-
-function errorCB(err) {
-    alert("Error processing SQL: "+err.code);
-}
-
-function successCB() {
+    //$result = mysql_query("SHOW TABLES LIKE 'myTable'");
+    //$tableExists = mysql_num_rows($result) > 0;
+    tx.executeSql('DROP TABLE IF EXISTS Category');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS Category (id unique, name, parent_id, level)');
+    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES (1, "Home", 1, 0) ');
+    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES (2, "Furniture", 1, 1) ');
+    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES (3, "Kitchen", 1, 1) ');
+    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES (4, "Garden", 1, 1) ');
+    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES (5, "Electronics", 5, 0) ');
+    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES (6, "Computer", 5, 1) ');
+    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES (7, "Phone", 5, 1) ');
+    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES (8, "Services", 8, 0) ');
 
 }
