@@ -1,5 +1,10 @@
 # ANDROID / ECLIPSE
- 
+.idea/
+platforms/
+plugins/
+vendors/
+*~
+.cordova/
 # built application files
 *.apk
 *.ap_

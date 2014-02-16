@@ -1,8 +1,0 @@
-'use strict';
-
-angular.module('myApp', ['myApp.controllers'], function($routeProvider, $locationProvider) {
-  $routeProvider.when('/view1', {templateUrl: 'partials/partial1.html', controller: 'MyCtrl1'});
-  $routeProvider.when('/view2', {templateUrl: 'partials/ranking.html', controller: 'MyCtrl2'});
-  // configure html5 to get links working on jsfiddle
-  $locationProvider.html5Mode(true);
-});
