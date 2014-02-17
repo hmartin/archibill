@@ -62,6 +62,7 @@ angular.module('starter.controllers', ['ionic'])
           
         }   
         function saveCategory() {
+            console.log($scope.name);
             db.transaction(function (tx) {
                 $sql ='INSERT INTO Category (id, name, parent_id, level) VALUES ("", ?,?,1,1)';
                 tx.executeSql($sql, [$scope.name, $scope.category], saveCategorySuccess);
@@ -81,7 +82,7 @@ angular.module('starter.controllers', ['ionic'])
         }
 
         function querySuccess(tx, results) {
-            console.log(results);
+            console.log(results.item(0));
             $scope.categories =new Array();
             for (var i=0; i < results.rows.length; i++){
                 $scope.categories[i]  = results.rows.item(i);
