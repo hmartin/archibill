@@ -60,14 +60,23 @@ angular.module('starter.controllers', ['ionic'])
         $scope.saveCategory = function () {
             console.log('saveCatFct');
             db.transaction(function (tx) {
-                $sql ='INSERT INTO Category (id, name, parent_id, level) VALUES ("", ?,?,1,1)';
+                $sql ='INSERT INTO Category (id, name, parent_id, level) VALUES ("", ?,?,1)';
                 tx.executeSql($sql, [$scope.name, $scope.category], saveCategorySuccess);
             });
             $scope.modal.hide();
         }
         
+        $scope.saveCategory = function (id) {
+            console.log('delete'+id);
+            db.transaction(function (tx) {
+                $sql ='DELETE FROM Category WHERE id = ?';
+                tx.executeSql($sql, [id], saveCategorySuccess);
+            });
+            getCategories();
+        }
+        
         $scope.rootOnly = function(category) {
-            if(categorie.level == 0 ) {
+            if(category.level == 0 ) {
                 return true;
             }
             return false;

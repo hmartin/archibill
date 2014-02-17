@@ -7,9 +7,8 @@
               <div ng-repeat="item in categories" item="item" class="item item-button-right">
                   <span ng-if="item.level" style="margin-left:15px;float:left">&nbsp;</span>
                   {{ item.name }}
-                  <button class="button button-positive">
-                      <i class="icon-right ion-android-trash"></i>
-                  </button>
+                <button class="button icon ion-android-trash button-assertive"  ng-click="deleteCategory({{ item.id }})">
+                </button>
               </div>
           </div>
 
