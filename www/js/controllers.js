@@ -126,18 +126,18 @@ function populateDB(tx) {
     //$result = mysql_query("SHOW TABLES LIKE 'myTable'");
     //$tableExists = mysql_num_rows($result) > 0;
     tx.executeSql('DROP TABLE IF EXISTS Category');
-    tx.executeSql('CREATE TABLE IF NOT EXISTS Category (id INTEGER AUTO_INCREMENT, name, parent_id, level)', [], createSuccess);
+    tx.executeSql('CREATE TABLE IF NOT EXISTS Category (id INTEGER AUTO_INCREMENT, name, parent_id, level)', null, createSuccess);
 }
 
 function createSuccess() {
    db.transaction(function (tx) {
-    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES ("", "Home", 1, 0) ');
-    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES ("", "Furniture", 1, 1) ');
-    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES ("", "Kitchen", 1, 1) ');
-    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES ("", "Garden", 1, 1) ');
-    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES ("", "Electronics", 5, 0) ');
-    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES ("", "Computer", 5, 1) ');
-    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES ("", "Phone", 5, 1) ');
-    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES ("", "Services", 8, 0) ');
+    tx.executeSql('INSERT INTO Category (name, parent_id, level) VALUES ("Home", 1, 0) ');
+    tx.executeSql('INSERT INTO Category (name, parent_id, level) VALUES ("Furniture", 1, 1) ');
+    tx.executeSql('INSERT INTO Category (name, parent_id, level) VALUES ("Kitchen", 1, 1) ');
+    tx.executeSql('INSERT INTO Category (name, parent_id, level) VALUES ("Garden", 1, 1) ');
+    tx.executeSql('INSERT INTO Category (name, parent_id, level) VALUES ("Electronics", 5, 0) ');
+    tx.executeSql('INSERT INTO Category (name, parent_id, level) VALUES ("Computer", 5, 1) ');
+    tx.executeSql('INSERT INTO Category (name, parent_id, level) VALUES ("Phone", 5, 1) ');
+    tx.executeSql('INSERT INTO Category (name, parent_id, level) VALUES ("Services", 8, 0) ');
    });
 }
