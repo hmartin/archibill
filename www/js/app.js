@@ -28,6 +28,25 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
               }
           }
       })
+      .state('tab.tips', {
+          url: '/tips',
+          views: {
+              'main-tab': {
+                  templateUrl: 'templates/tips.html',
+                  controller: 'home'
+              }
+          }
+      })
+      .state('tab.choose', {
+          url: '/tips',
+          views: {
+              'main-tab': {
+                  templateUrl: 'templates/choose.html',
+                  controller: 'home'
+              }
+          }
+      })
+
 
       .state('tab.take', {
           url: '/take',

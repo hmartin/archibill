@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['ionic'])
 
-    .controller('home', function($scope, $stateParams, $ionicModal, $ionicPlatform) {
+    .controller('home', function($scope, $stateParams, $state, $ionicPlatform) {
 
         $ionicPlatform.ready(function() {
             pictureSource=navigator.camera.PictureSourceType;
@@ -10,25 +10,30 @@ angular.module('starter.controllers', ['ionic'])
 
         db.transaction(populateDB);
 
-        $ionicModal.fromTemplateUrl('templates/modals/tips.html', function(modal) {
-            $scope.modal = modal;
-        }, {
-            scope: $scope,
-            animation: 'slide-in-up'
-        });
-
-        $scope.openTipsDialog = function () {
-            $scope.modal.show();
-        }
-
-        $scope.closeModal = function() {
-            navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-                quality: 40,
-                correctOrientation: 1,
-                allowEdit: true,
-                destinationType: navigator.camera.DestinationType.FILE_URI  });
-            $scope.modal.hide();
+        $scope.takePicture = function(tips) {
+            if (tips) {
+                $scope.template = 'template/tips.html';
+            }
+            if (typeof navigator.camera != 'undefined') {
+                navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+                    quality: 40,
+                    correctOrientation: 1,
+                    allowEdit: true,
+                    destinationType: navigator.camera.DestinationType.FILE_URI  });
+            } else {
+                onPhotoDataSuccess('http://localhost/archibill/www/img/iconic.png');
+            }
         };
+
+        function onPhotoDataSuccess(imageURI) {
+
+            $scope.uri = imageURI;
+            /* asynchr post
+             save to bdd
+             suggest cat
+             */
+            $state.go('tab.choose', $scope);
+        }
     })
 
 
@@ -114,14 +119,6 @@ angular.module('starter.controllers', ['ionic'])
 
 
 
-
-function onPhotoDataSuccess(imageURI) {
-    uri = imageURI;
-    /* asynchr post
-    save to bdd
-    suggest cat
-     */
-}
 
 function onFail(message) {
     alert('Failed because: ' + message);
