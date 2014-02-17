@@ -10,12 +10,12 @@ angular.module('starter.controllers', ['ionic'])
 
         db.transaction(populateDB);
 
-        $ionicModal.fromTemplateUrl('templates/modals/tips.html', function(modal) {
+        /*$ionicModal.fromTemplateUrl('templates/modals/tips.html', function(modal) {
             $scope.modal = modal;
         }, {
             scope: $scope,
             animation: 'slide-in-up'
-        });
+        });*/
 
         $scope.openTipsDialog = function () {
             $scope.modal.show();
@@ -58,17 +58,15 @@ angular.module('starter.controllers', ['ionic'])
         }
         
         $scope.saveCategory = function () {
-            $scope.modal.hide();
-          
-        }   
-        function saveCategory() {
             console.log('saveCatFct');
             db.transaction(function (tx) {
                 $sql ='INSERT INTO Category (id, name, parent_id, level) VALUES ("", ?,?,1,1)';
                 tx.executeSql($sql, [$scope.name, $scope.category], saveCategorySuccess);
             });
+            $scope.modal.hide();
         }
-        $scope.rootOnly = function(categorie) {
+        
+        $scope.rootOnly = function(category) {
             if(categorie.level == 0 ) {
                 return true;
             }
@@ -87,7 +85,6 @@ angular.module('starter.controllers', ['ionic'])
             for (var i=0; i < results.rows.length; i++){
                 $scope.categories[i]  = results.rows.item(i);
             }
-
             $scope.$apply(); //trigger digest
         }
         getCategories();
