@@ -10,12 +10,12 @@ angular.module('starter.controllers', ['ionic'])
 
         db.transaction(populateDB);
 
-        /*$ionicModal.fromTemplateUrl('templates/modals/tips.html', function(modal) {
+        $ionicModal.fromTemplateUrl('templates/modals/tips.html', function(modal) {
             $scope.modal = modal;
         }, {
             scope: $scope,
             animation: 'slide-in-up'
-        });*/
+        });
 
         $scope.openTipsDialog = function () {
             $scope.modal.show();
@@ -46,7 +46,7 @@ angular.module('starter.controllers', ['ionic'])
     .controller('manage', function($scope, $stateParams, $ionicModal) {
 
         $ionicModal.fromTemplateUrl('templates/modals/createCategory.html',
-            function(modal) { $scope.modal = modal; },
+            function(modal) { $scope.category = null;$scope.modal = modal; },
             {
                 scope: $scope,
                 animation: 'slide-in-up'
@@ -54,42 +54,49 @@ angular.module('starter.controllers', ['ionic'])
         );
 
         $scope.createCategoryModal = function () {
+
             $scope.modal.show();
         }
         
-        $scope.saveCategory = function () {
-            console.log('saveCatFct');
+        $scope.saveCategory = function (category) {
+            if (!category.parent) {
+                p=0;
+            } else {
+                p=category.parent;
+            }
+            console.log(p);
             db.transaction(function (tx) {
-                $sql ='INSERT INTO Category (id, name, parent_id, level) VALUES ("", ?,?,1)';
-                tx.executeSql($sql, [$scope.name, $scope.category], saveCategorySuccess);
+                $sql ='INSERT INTO Category (name, parent_id) VALUES (?,?)';
+                tx.executeSql($sql, [category.name, p]);
             });
+            getCategories();
             $scope.modal.hide();
         }
         
-        $scope.saveCategory = function (id) {
+        $scope.deleteCategory = function (id) {
             console.log('delete'+id);
             db.transaction(function (tx) {
                 $sql ='DELETE FROM Category WHERE id = ?';
-                tx.executeSql($sql, [id], saveCategorySuccess);
+                tx.executeSql($sql, [id]);
             });
             getCategories();
         }
         
         $scope.rootOnly = function(category) {
-            if(category.level == 0 ) {
+            if(category.parent_id == 0 ) {
                 return true;
             }
             return false;
         };
         function getCategories() {
             db.transaction(function (tx) {
-                $sql = 'SELECT * FROM Category ORDER BY parent_id, level';
+                $sql = 'SELECT * FROM Category c ORDER BY case when c.parent_id = 0 then c.name else (select c2.name from Category c2 WHERE c2.id = c.parent_id) end, case when c.parent_id = 0 then 1 end desc, c.name';
                 tx.executeSql($sql, [], querySuccess, null);
             });
         }
 
         function querySuccess(tx, results) {
-            console.log(results.item(0));
+            //console.log(results.item(0));
             $scope.categories =new Array();
             for (var i=0; i < results.rows.length; i++){
                 $scope.categories[i]  = results.rows.item(i);
@@ -126,18 +133,18 @@ function populateDB(tx) {
     //$result = mysql_query("SHOW TABLES LIKE 'myTable'");
     //$tableExists = mysql_num_rows($result) > 0;
     tx.executeSql('DROP TABLE IF EXISTS Category');
-    tx.executeSql('CREATE TABLE IF NOT EXISTS Category (id INTEGER AUTO_INCREMENT, name, parent_id, level)', null, createSuccess);
+    tx.executeSql('CREATE TABLE IF NOT EXISTS Category (id INTEGER PRIMARY KEY AUTOINCREMENT, name, parent_id)', null, createSuccess);
 }
 
 function createSuccess() {
    db.transaction(function (tx) {
-    tx.executeSql('INSERT INTO Category (name, parent_id, level) VALUES ("Home", 1, 0) ');
-    tx.executeSql('INSERT INTO Category (name, parent_id, level) VALUES ("Furniture", 1, 1) ');
-    tx.executeSql('INSERT INTO Category (name, parent_id, level) VALUES ("Kitchen", 1, 1) ');
-    tx.executeSql('INSERT INTO Category (name, parent_id, level) VALUES ("Garden", 1, 1) ');
-    tx.executeSql('INSERT INTO Category (name, parent_id, level) VALUES ("Electronics", 5, 0) ');
-    tx.executeSql('INSERT INTO Category (name, parent_id, level) VALUES ("Computer", 5, 1) ');
-    tx.executeSql('INSERT INTO Category (name, parent_id, level) VALUES ("Phone", 5, 1) ');
-    tx.executeSql('INSERT INTO Category (name, parent_id, level) VALUES ("Services", 8, 0) ');
+    tx.executeSql('INSERT INTO Category (name, parent_id) VALUES ("home", 0) ');
+    tx.executeSql('INSERT INTO Category (name, parent_id) VALUES ("furniture", 1) ');
+    tx.executeSql('INSERT INTO Category (name, parent_id) VALUES ("kitchen", 1) ');
+    tx.executeSql('INSERT INTO Category (name, parent_id) VALUES ("garden", 1) ');
+    tx.executeSql('INSERT INTO Category (name, parent_id) VALUES ("electronics", 0) ');
+    tx.executeSql('INSERT INTO Category (name, parent_id) VALUES ("computer", 5) ');
+    tx.executeSql('INSERT INTO Category (name, parent_id) VALUES ("phone", 5) ');
+    tx.executeSql('INSERT INTO Category (name, parent_id) VALUES ("services", 0) ');
    });
 }

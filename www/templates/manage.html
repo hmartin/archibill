@@ -4,11 +4,10 @@
   <content has-header="true"  padding="true">
       <div class="list">
 
-              <div ng-repeat="item in categories" item="item" class="item item-button-right">
-                  <span ng-if="item.level" style="margin-left:15px;float:left">&nbsp;</span>
+              <div ng-repeat="item in categories" class="item item-icon-right">
+                  <span ng-if="item.parent_id" style="margin-left:15px;float:left">&nbsp;</span>
                   {{ item.name }}
-                <button class="button icon ion-android-trash button-assertive"  ng-click="deleteCategory({{ item.id }})">
-                </button>
+                  <i class="icon ion-android-trash assertive" ng-click="deleteCategory(item.id)"></i>
               </div>
           </div>
 
