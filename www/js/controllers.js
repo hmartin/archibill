@@ -56,17 +56,27 @@ angular.module('starter.controllers', ['ionic'])
         $scope.createCategoryModal = function () {
             $scope.modal.show();
         }
-        $scope.rootOnly = function(categorie)
-        {
-            if(categorie.level == 0 )
-            {
+        
+        $scope.saveCategory = function () {
+            $scope.modal.hide();
+          
+        }   
+        function saveCategory() {
+            db.transaction(function (tx) {
+                $sql ='INSERT INTO Category (id, name, parent_id, level) VALUES ("", ?,?,1,1)';
+                tx.executeSql($sql, [$scope.name, $scope.category], saveCategorySuccess);
+            });
+        }
+        $scope.rootOnly = function(categorie) {
+            if(categorie.level == 0 ) {
                 return true;
             }
             return false;
         };
-        function getCategories(level) {
+        function getCategories() {
             db.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM Category WHERE level <= '+level+' ORDER BY parent_id, level', [], querySuccess, null);
+                $sql = 'SELECT * FROM Category ORDER BY parent_id, level';
+                tx.executeSql($sql, [], querySuccess, null);
             });
         }
 
@@ -79,7 +89,7 @@ angular.module('starter.controllers', ['ionic'])
 
             $scope.$apply(); //trigger digest
         }
-        getCategories(2);
+        getCategories();
     })
 
 
@@ -109,14 +119,14 @@ function populateDB(tx) {
     //$result = mysql_query("SHOW TABLES LIKE 'myTable'");
     //$tableExists = mysql_num_rows($result) > 0;
     tx.executeSql('DROP TABLE IF EXISTS Category');
-    tx.executeSql('CREATE TABLE IF NOT EXISTS Category (id unique, name, parent_id, level)');
-    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES (1, "Home", 1, 0) ');
-    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES (2, "Furniture", 1, 1) ');
-    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES (3, "Kitchen", 1, 1) ');
-    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES (4, "Garden", 1, 1) ');
-    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES (5, "Electronics", 5, 0) ');
-    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES (6, "Computer", 5, 1) ');
-    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES (7, "Phone", 5, 1) ');
-    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES (8, "Services", 8, 0) ');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS Category (id INTEGER AUTO_INCREMENT, name, parent_id, level)');
+    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES ("", "Home", 1, 0) ');
+    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES ("", "Furniture", 1, 1) ');
+    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES ("", "Kitchen", 1, 1) ');
+    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES ("", "Garden", 1, 1) ');
+    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES ("", "Electronics", 5, 0) ');
+    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES ("", "Computer", 5, 1) ');
+    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES ("", "Phone", 5, 1) ');
+    tx.executeSql('INSERT INTO Category (id, name, parent_id, level) VALUES ("", "Services", 8, 0) ');
 
 }

@@ -2,25 +2,25 @@
 
 <div class="modal">
     <header class="bar bar-header bar-positive">
-        <h1 class="title">Tips</h1>
+        <h1 class="title">Add Category</h1>
     </header>
     <content has-header="true">
         <div class="padding">
                 <label class="item item-input">
-                    <input type="text" placeholder="Catergory name">
+                    <input type="text" ng-model="name" name="name" placeholder="Catergory name">
                 </label>
             <br>
             Chose the parent category if one:
             <div class="list">
                 <label class="item item-radio" ng-repeat="c in categories | filter:rootOnly">
-                    <input type="radio" name="group">
+                  <input type="radio" ng-model="category" name="category" value="{{ c.id }}">
                     <div class="item-content">
                         {{ c.name }}
                     </div>
                     <i class="radio-icon ion-checkmark"></i>
                 </label>
             </div>
-            <div class="button button-outline button-balanced"  ng-click="createCategoryModal()">
+            <div class="button button-outline button-balanced"  ng-click="saveCategory()">
                 <i class="icon-left ion-save"></i> Save
             </div>
         </div>
