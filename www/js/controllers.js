@@ -7,8 +7,7 @@ angular.module('starter.controllers', ['ionic'])
             destinationType=navigator.camera.DestinationType;
         });
 
-
-        db.transaction(populateDB);
+        populateDB();
 
         $scope.takePicture = function(tips) {
             if (tips) {
@@ -21,18 +20,25 @@ angular.module('starter.controllers', ['ionic'])
                     allowEdit: true,
                     destinationType: navigator.camera.DestinationType.FILE_URI  });
             } else {
-                onPhotoDataSuccess('http://localhost/archibill/www/img/iconic.png');
+                onPhotoDataSuccess('img/ionic.png');
             }
         };
 
         function onPhotoDataSuccess(imageURI) {
 
             $scope.uri = imageURI;
+            
+            $sql ='INSERT INTO Image (name, uri, category_id) VALUES (?,?,0)';
+            executeSql($sql, [imageURI, imageURI], insertPhotoSuccess);
             /* asynchr post
-             save to bdd
              suggest cat
              */
-            $state.go('tab.choose', $scope);
+        }
+        
+        function insertPhotoSuccess(tx, result) {
+            url = '#/tabs/choose/'+result.insertId;
+            console.log(url);
+            $scope.$apply( $location.path( url ) );
         }
     })
 
@@ -59,31 +65,21 @@ angular.module('starter.controllers', ['ionic'])
         );
 
         $scope.createCategoryModal = function () {
-
             $scope.modal.show();
         }
         
         $scope.saveCategory = function (category) {
-            if (!category.parent) {
-                p=0;
-            } else {
-                p=category.parent;
-            }
+            p = !category.parent ? 0 : category.parent;
+            
             console.log(p);
-            db.transaction(function (tx) {
-                $sql ='INSERT INTO Category (name, parent_id) VALUES (?,?)';
-                tx.executeSql($sql, [category.name, p]);
-            });
+            executeSql(queryService.get('categoryInsert'), [category.name, p]);
             getCategories();
             $scope.modal.hide();
         }
         
         $scope.deleteCategory = function (id) {
             console.log('delete'+id);
-            db.transaction(function (tx) {
-                $sql ='DELETE FROM Category WHERE id = ?';
-                tx.executeSql($sql, [id]);
-            });
+            executeSql(queryService.get('categoryDelete'), [id]);
             getCategories();
         }
         
@@ -94,19 +90,16 @@ angular.module('starter.controllers', ['ionic'])
             return false;
         };
         function getCategories() {
-            db.transaction(function (tx) {
-                $sql = 'SELECT * FROM Category c ORDER BY case when c.parent_id = 0 then c.name else (select c2.name from Category c2 WHERE c2.id = c.parent_id) end, case when c.parent_id = 0 then 1 end desc, c.name';
-                tx.executeSql($sql, [], querySuccess, null);
-            });
+            $sql = 'SELECT * FROM Category c ORDER BY case when c.parent_id = 0 then c.name else (select c2.name from Category c2 WHERE c2.id = c.parent_id) end, case when c.parent_id = 0 then 1 end desc, c.name';
+            executeSql($sql, [], querySuccess);
         }
 
         function querySuccess(tx, results) {
-            //console.log(results.item(0));
             $scope.categories =new Array();
             for (var i=0; i < results.rows.length; i++){
                 $scope.categories[i]  = results.rows.item(i);
             }
-            $scope.$apply(); //trigger digest
+            $scope.$apply();
         }
         getCategories();
     })
@@ -123,14 +116,22 @@ angular.module('starter.controllers', ['ionic'])
 function onFail(message) {
     alert('Failed because: ' + message);
 }
+function onSuccess(tx, results) {
+}
+function executeSql (sql, values, successFct) {
+   values = typeof values !== 'undefined' ? values : [];
+   successFct = typeof successFct !== 'undefined' ? successFct : 'onSuccess';
+   db.transaction(function (tx) {
+    tx.executeSql(sql, values, successFct);
+   });
+}
 
-
-
-function populateDB(tx) {
+function populateDB() {
     //$result = mysql_query("SHOW TABLES LIKE 'myTable'");
     //$tableExists = mysql_num_rows($result) > 0;
-    tx.executeSql('DROP TABLE IF EXISTS Category');
-    tx.executeSql('CREATE TABLE IF NOT EXISTS Category (id INTEGER PRIMARY KEY AUTOINCREMENT, name, parent_id)', null, createSuccess);
+    executeSql('DROP TABLE IF EXISTS Category');
+    executeSql('CREATE TABLE IF NOT EXISTS Category (id INTEGER PRIMARY KEY AUTOINCREMENT, name, parent_id)', null, createSuccess);
+    executeSql('CREATE TABLE IF NOT EXISTS Image (id INTEGER PRIMARY KEY AUTOINCREMENT, name, uri, category_id)');
 }
 
 function createSuccess() {

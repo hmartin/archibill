@@ -38,7 +38,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
           }
       })
       .state('tab.choose', {
-          url: '/tips',
+          url: '/choose/:iid',
           views: {
               'main-tab': {
                   templateUrl: 'templates/choose.html',
