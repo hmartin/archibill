@@ -118,8 +118,8 @@ function onFail(message) {
 var onSuccessFct = function onSuccess(tx, results) {
 }
 function executeSql (sql, values, onSuccessFct) {
-   values = typeof values !== 'undefined' ? values : [];
-   onSuccessFct = typeof onSuccessFct !== 'undefined' ? onSuccessFct : 'onSuccessFct';
+   values = typeof values !== 'undefined' ? values : null;
+   onSuccessFct = typeof onSuccessFct !== 'undefined' ? onSuccessFct : null;
    console.log(sql);console.log(values);
    db.transaction(function (tx) {
        tx.executeSql(sql, values, onSuccessFct);
