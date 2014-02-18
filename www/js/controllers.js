@@ -7,8 +7,14 @@ angular.module('starter.controllers', ['ionic'])
             destinationType=navigator.camera.DestinationType;
         });
 
-        populateDB();
+        queryService.execute('categoryDrop');
+        queryService.execute('categoryCreate', null, createSuccess);
+        queryService.execute('imageCreate');
 
+        function createSuccess() {
+            $init =  [["home", 0],["furniture", 1],["kitchen", 1],,["garden", 1],["electronics", 0],["computer", 5],["phone", 5],["services", 0]];
+
+        }
         $scope.takePicture = function(tips) {
             if (tips) {
                 $scope.template = 'template/tips.html';
@@ -26,11 +32,9 @@ angular.module('starter.controllers', ['ionic'])
 
         function onPhotoDataSuccess(imageURI) {
             $scope.uri = imageURI;
-            
-            $sql ='INSERT INTO Image (name, uri, category_id) VALUES (?,?,0)';
-            executeSql($sql, [imageURI, imageURI], insertPhotoSuccess);
+
+            executeSql(queryService.get('imageSelect'), [imageURI, imageURI], insertPhotoSuccess);
             /* asynchr post
-             suggest cat
              */
         }
         
@@ -41,6 +45,10 @@ angular.module('starter.controllers', ['ionic'])
         }
     })
 
+
+    .controller('choose', function($scope, $stateParams, MyService) {
+        
+    })
 
     .controller('option', function($scope, $stateParams, MyService) {
         $scope.data = MyService.doStuff();
@@ -71,26 +79,18 @@ angular.module('starter.controllers', ['ionic'])
             p = !category.parent ? 0 : category.parent;
             
             console.log(p);
-            executeSql(queryService.get('categoryInsert'), [category.name, p]);
+            queryService.exexute('categoryInsert', [category.name, p]);
             getCategories();
             $scope.modal.hide();
         }
         
         $scope.deleteCategory = function (id) {
             console.log('delete'+id);
-            executeSql(queryService.get('categoryDelete'), [id]);
-            getCategories();
+            queryService.exexute('categoryDelete', [id]);
         }
         
-        $scope.rootOnly = function(category) {
-            if(category.parent_id == 0 ) {
-                return true;
-            }
-            return false;
-        };
         function getCategories() {
-            $sql = 'SELECT * FROM Category c ORDER BY case when c.parent_id = 0 then c.name else (select c2.name from Category c2 WHERE c2.id = c.parent_id) end, case when c.parent_id = 0 then 1 end desc, c.name';
-            executeSql($sql, [], querySuccess);
+            queryService.exexute('categorySelectAll', null, querySuccess);
         }
 
         function querySuccess(tx, results) {
@@ -115,34 +115,9 @@ angular.module('starter.controllers', ['ionic'])
 function onFail(message) {
     alert('Failed because: ' + message);
 }
-var onSuccessFct = function onSuccess(tx, results) {
-}
-function executeSql (sql, values, onSuccessFct) {
-   values = typeof values !== 'undefined' ? values : null;
-   onSuccessFct = typeof onSuccessFct !== 'undefined' ? onSuccessFct : null;
-   console.log(sql);console.log(values);
-   db.transaction(function (tx) {
-       tx.executeSql(sql, values, onSuccessFct);
-   });
-}
 
-function populateDB() {
+function populateDB(queryService) {
     //$result = mysql_query("SHOW TABLES LIKE 'myTable'");
     //$tableExists = mysql_num_rows($result) > 0;
-    executeSql('DROP TABLE IF EXISTS Category');
-    executeSql('CREATE TABLE IF NOT EXISTS Category (id INTEGER PRIMARY KEY AUTOINCREMENT, name, parent_id)', null, createSuccess);
-    executeSql('CREATE TABLE IF NOT EXISTS Image (id INTEGER PRIMARY KEY AUTOINCREMENT, name, uri, category_id)');
 }
 
-function createSuccess() {
-   db.transaction(function (tx) {
-    tx.executeSql('INSERT INTO Category (name, parent_id) VALUES ("home", 0) ');
-    tx.executeSql('INSERT INTO Category (name, parent_id) VALUES ("furniture", 1) ');
-    tx.executeSql('INSERT INTO Category (name, parent_id) VALUES ("kitchen", 1) ');
-    tx.executeSql('INSERT INTO Category (name, parent_id) VALUES ("garden", 1) ');
-    tx.executeSql('INSERT INTO Category (name, parent_id) VALUES ("electronics", 0) ');
-    tx.executeSql('INSERT INTO Category (name, parent_id) VALUES ("computer", 5) ');
-    tx.executeSql('INSERT INTO Category (name, parent_id) VALUES ("phone", 5) ');
-    tx.executeSql('INSERT INTO Category (name, parent_id) VALUES ("services", 0) ');
-   });
-}

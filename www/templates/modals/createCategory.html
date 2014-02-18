@@ -13,7 +13,7 @@
             Chose the parent category if one:
             <div class="list">
                 <label class="item item-radio" ng-repeat="c in categories | filter:rootOnly">
-                  <input type="radio" ng-model="category.parent" name="category" value="{{ c.id }}" ng-click >
+                  <input type="radio" ng-model="category.parent" name="category" value="{{ c.id }}" ng-click="" >
                     <div class="item-content">
                         {{ c.name }}
                     </div>

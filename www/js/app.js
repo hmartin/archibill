@@ -42,7 +42,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
           views: {
               'main-tab': {
                   templateUrl: 'templates/choose.html',
-                  controller: 'home'
+                  controller: 'choose'
               }
           }
       })
