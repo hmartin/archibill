@@ -53,7 +53,7 @@ angular.module('starter.controllers', ['ionic'])
 
 
     /********************** MANAGE CATEGORY ******************************/
-    .controller('manage', function($scope, $stateParams, $ionicModal, QueryService) {
+    .controller('manage', function($scope, $stateParams, $ionicModal, queryService) {
 
         $ionicModal.fromTemplateUrl('templates/modals/createCategory.html',
             function(modal) { $scope.category = null;$scope.modal = modal; },
@@ -115,13 +115,13 @@ angular.module('starter.controllers', ['ionic'])
 function onFail(message) {
     alert('Failed because: ' + message);
 }
-function onSuccess(tx, results) {
+var onSuccessFct = function onSuccess(tx, results) {
 }
-function executeSql (sql, values, successFct) {
+function executeSql (sql, values, onSuccessFct) {
    values = typeof values !== 'undefined' ? values : [];
-   successFct = typeof successFct !== 'undefined' ? successFct : 'onSuccess';
+   onSuccessFct = typeof onSuccessFct !== 'undefined' ? onSuccessFct : 'onSuccessFct';
    db.transaction(function (tx) {
-    tx.executeSql(sql, values, successFct);
+       tx.executeSql(sql, values, onSuccessFct);
    });
 }
 
