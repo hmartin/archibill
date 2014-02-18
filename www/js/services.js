@@ -3,8 +3,8 @@ angular.module('starter.services', [])
 .factory('QueryService', function() {
     
   var queries = [
-    'categoryInsert': 'INSERT INTO Category (name, parent_id) VALUES (?,?)',
-    'categoryDelete': 'DELETE FROM Category WHERE id = ?'
+    categoryInsert: 'INSERT INTO Category (name, parent_id) VALUES (?,?)',
+    categoryDelete: 'DELETE FROM Category WHERE id = ?'
   ];
 
   return {
