@@ -2,10 +2,10 @@ angular.module('starter.services', [])
 
 .factory('QueryService', function() {
     
-  var queries = [
+    var queries = {
     categoryInsert: 'INSERT INTO Category (name, parent_id) VALUES (?,?)',
     categoryDelete: 'DELETE FROM Category WHERE id = ?'
-  ];
+    };
 
   return {
     get: function(queryId) { return queries[queryId]; }
