@@ -7,15 +7,18 @@ angular.module('starter.services', [])
         categoryInsert: 'INSERT INTO Category (name, parent_id) VALUES (?,?)',
         categoryDelete: 'DELETE FROM Category WHERE id = ?',
         categorySelectAll: 'SELECT * FROM Category c ORDER BY case when c.parent_id = 0 then c.name else (select c2.name from Category c2 WHERE c2.id = c.parent_id) end, case when c.parent_id = 0 then 1 end desc, c.name',
+        imageDrop: 'DROP TABLE IF EXISTS Image',
         imageCreate: 'CREATE TABLE IF NOT EXISTS Image (id INTEGER PRIMARY KEY AUTOINCREMENT, name, uri, category_id)',
-        imageSelect: 'INSERT INTO Image (name, uri, category_id) VALUES (?,?,0)'
+        imageInsert: 'INSERT INTO Image (uri, category_id) VALUES (?,0)',
+        imageSelect: 'SELECT * FROM Image WHERE id = ? ',
+        imageUpdateCategory: 'UPDATE Image SET name = ? , category_id = ? WHERE id = ? '
     };
     
   return {
-      excute: function(queryId, values, onSuccessFct) { 
+      execute: function(queryId, values, onSuccessFct) {
           values = typeof values !== 'undefined' ? values : null;
           onSuccessFct = typeof onSuccessFct !== 'undefined' ? onSuccessFct : null;
-          console.log(sql);console.log(values);
+          console.log(queries[queryId]);console.log(values);
           db.transaction(function (tx) {
               tx.executeSql(queries[queryId], values, onSuccessFct);
           });
@@ -23,15 +26,19 @@ angular.module('starter.services', [])
   }
 })
 
-.service('categoryService', function($http) {
-    var myData = null;
-    var promise = $http.get('http://izidot.com/json.json').success(function (data) {
-        myData = data;
-    });
+.service('categoryService', function($rootScope, $q, queryService) {
     return {
-        promise:promise,
-        doStuff: function () {
-            return myData;//.getSomeData();
+        getCategories: function () {
+            var deferred = $q.defer();
+            queryService.execute('categorySelectAll', null, function (tx, results) {
+                categories =new Array();
+                for (var i=0; i < results.rows.length; i++){
+                    categories[i]  = results.rows.item(i);
+                }
+                console.log(categories);
+                $rootScope.$apply(function() { deferred.resolve(categories); });
+            });
+            return deferred.promise;
         }
     };
 })
@@ -47,18 +54,21 @@ angular.module('starter.services', [])
         }
     };
 })
+    .filter('rootOnly', function() {
+        return function( items ) {
+            var categories = [];
+            angular.forEach(items, function(item) {
+                if( item.parent_id == 0) {
+                    categories.push(item);
+                }
+            });
+            return categories;
+        };
+    })
 .filter('ucfirst', function() {
     return function(input, scope) {
         if (input!=null)
             return input.substring(0,1).toUpperCase()+input.substring(1);
     }
-})
-.filter('rootOnly', function() {
-    return function(category) {
-            if(category.parent_id == 0 ) {
-                return true;
-            }
-            return false;
-        }
 });
 

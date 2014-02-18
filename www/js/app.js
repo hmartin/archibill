@@ -68,12 +68,32 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
           }
       })
 
-      .state('tab.manage', {
-          url: '/manage',
+      .state('tab.category', {
+          url: '/category',
           views: {
               'main-tab': {
-                  templateUrl: 'templates/manage.html',
-                  controller: 'manage'
+                  templateUrl: 'templates/category.html',
+                  controller: 'category'
+              }
+          }
+      })
+
+      .state('tab.create', {
+          url: '/create-category',
+          views: {
+              'main-tab': {
+                  templateUrl: 'templates/createCategory.html',
+                  controller: 'category'
+              }
+          }
+      })
+
+      .state('tab.send', {
+          url: '/send',
+          views: {
+              'main-tab': {
+                  templateUrl: 'templates/send.html',
+                  controller: 'send'
               }
           }
       })

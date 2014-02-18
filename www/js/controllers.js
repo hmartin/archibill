@@ -1,53 +1,64 @@
 angular.module('starter.controllers', ['ionic'])
 
-    .controller('home', function($scope, $stateParams, $state, $ionicPlatform, queryService) {
+    .controller('home', function($scope, $location, $ionicPlatform, queryService) {
 
         $ionicPlatform.ready(function() {
             pictureSource=navigator.camera.PictureSourceType;
             destinationType=navigator.camera.DestinationType;
         });
 
-        queryService.execute('categoryDrop');
-        queryService.execute('categoryCreate', null, createSuccess);
-        queryService.execute('imageCreate');
 
-        function createSuccess() {
-            $init =  [["home", 0],["furniture", 1],["kitchen", 1],,["garden", 1],["electronics", 0],["computer", 5],["phone", 5],["services", 0]];
-
-        }
         $scope.takePicture = function(tips) {
             if (tips) {
-                $scope.template = 'template/tips.html';
-            }
-            if (typeof navigator.camera != 'undefined') {
-                navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-                    quality: 40,
-                    correctOrientation: 1,
-                    allowEdit: true,
-                    destinationType: navigator.camera.DestinationType.FILE_URI  });
+                $location.path('/tab/tips');
             } else {
-                onPhotoDataSuccess('img/ionic.png');
+                if (typeof navigator.camera != 'undefined') {
+                    navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+                        quality: 40,
+                        correctOrientation: 1,
+                        allowEdit: true,
+                        destinationType: navigator.camera.DestinationType.FILE_URI  });
+                } else {
+                    onPhotoDataSuccess('img/ionic.png');
+                }
             }
         };
 
         function onPhotoDataSuccess(imageURI) {
             $scope.uri = imageURI;
 
-            executeSql(queryService.get('imageSelect'), [imageURI, imageURI], insertPhotoSuccess);
+            queryService.execute('imageInsert', [imageURI], insertPhotoSuccess);
             /* asynchr post
              */
         }
         
         function insertPhotoSuccess(tx, result) {
-            url = '#/tabs/choose/'+result.insertId;
+            url = '/tab/choose/'+result.insertId;
             console.log(url);
-            $scope.$apply( $location.path( url ) );
+            $location.path( url );
         }
     })
 
+    .controller('choose', function($scope, $location, $stateParams, queryService, categoryService) {
+         queryService.execute('imageSelect', [$stateParams.iid], function querySuccess(tx, results) {
+             $scope.image = angular.copy(results.rows.item(0));
+             $scope.$apply();
+         });
 
-    .controller('choose', function($scope, $stateParams, MyService) {
-        
+        function upCategories() {
+            categoryService.getCategories().then( function(categories) {
+                $scope.categories =categories;
+            });
+        }
+
+        $scope.updateImage = function (image) {
+            console.log(image);
+            queryService.execute('imageUpdateCategory', [image.name, image.category_id, $scope.image.id]);
+            $location.path('/tab/home');
+        }
+
+        upCategories();
+
     })
 
     .controller('option', function($scope, $stateParams, MyService) {
@@ -61,63 +72,40 @@ angular.module('starter.controllers', ['ionic'])
 
 
     /********************** MANAGE CATEGORY ******************************/
-    .controller('manage', function($scope, $stateParams, $ionicModal, queryService) {
-
-        $ionicModal.fromTemplateUrl('templates/modals/createCategory.html',
-            function(modal) { $scope.category = null;$scope.modal = modal; },
-            {
-                scope: $scope,
-                animation: 'slide-in-up'
-            }
-        );
-
-        $scope.createCategoryModal = function () {
-            $scope.modal.show();
-        }
+    .controller('category', function($scope, $location,queryService, categoryService) {
         
         $scope.saveCategory = function (category) {
             p = !category.parent ? 0 : category.parent;
-            
-            console.log(p);
-            queryService.exexute('categoryInsert', [category.name, p]);
-            getCategories();
-            $scope.modal.hide();
-        }
-        
-        $scope.deleteCategory = function (id) {
-            console.log('delete'+id);
-            queryService.exexute('categoryDelete', [id]);
-        }
-        
-        function getCategories() {
-            queryService.exexute('categorySelectAll', null, querySuccess);
+            queryService.execute('categoryInsert', [category.name, p]);
+            $location.path('/tab/category');
         }
 
-        function querySuccess(tx, results) {
-            $scope.categories =new Array();
-            for (var i=0; i < results.rows.length; i++){
-                $scope.categories[i]  = results.rows.item(i);
-            }
-            $scope.$apply();
+        $scope.deleteCategory = function (id) {
+            queryService.execute('categoryDelete', [id], upCategories);
         }
-        getCategories();
+
+        function upCategories() {
+            categoryService.getCategories().then( function(categories) {
+                $scope.categories =categories;
+            });
+        }
+
+        upCategories();
     })
 
 
-    .controller('send', function($scope, $stateParams) {
+    .controller('send', function($scope,queryService) {
 
+        queryService.execute('categoryDrop');
+        queryService.execute('imageDrop');
+        queryService.execute('categoryCreate', null, createSuccess);
+
+        function createSuccess() {
+            initCatValues =  [["home", 0],["furniture", 1],["kitchen", 1],,["garden", 1],["electronics", 0],["computer", 5],["phone", 5],["services", 0]];
+            angular.forEach(initCatValues, function(value, key){
+                queryService.execute('categoryInsert', value);
+            });
+        }
+        queryService.execute('imageCreate');
     })
 ;
-
-
-
-
-function onFail(message) {
-    alert('Failed because: ' + message);
-}
-
-function populateDB(queryService) {
-    //$result = mysql_query("SHOW TABLES LIKE 'myTable'");
-    //$tableExists = mysql_num_rows($result) > 0;
-}
-
