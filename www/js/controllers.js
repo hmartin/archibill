@@ -25,7 +25,6 @@ angular.module('starter.controllers', ['ionic'])
         };
 
         function onPhotoDataSuccess(imageURI) {
-
             $scope.uri = imageURI;
             
             $sql ='INSERT INTO Image (name, uri, category_id) VALUES (?,?,0)';
