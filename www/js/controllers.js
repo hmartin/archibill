@@ -13,8 +13,8 @@ angular.module('starter.controllers', ['ionic'])
             if (tips) {
                 $location.path('/tab/tips');
             } else {
-                if (destinationType != 'undefined') {
-                    navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+                if (true || destinationType != 'undefined') {
+                    navigator.camera.getPicture(onPhotoDataSuccess, null, {
                         quality: 40,
                         correctOrientation: 1,
                         allowEdit: true,
@@ -62,18 +62,24 @@ angular.module('starter.controllers', ['ionic'])
 
     })
 
-    .controller('option', function($scope, $stateParams, MyService) {
-        $scope.data = MyService.doStuff();
-        $scope.email = window.localStorage.getItem("email");
-    })
+    .controller('option', function($scope,localStorage, $location) {
+        $scope.user = new Array();
+        if (localStorage.get("email")) {
+            $scope.user.email = localStorage.get("email");
+        } else {
+            $scope.noEmail = 1;
+        }
 
-    .controller('OptionsEmailCtrl', function($scope ) {
-        $scope.email = '<input type="text" placeholder="'+window.localStorage.getItem("email")+'">';
+        $scope.saveEmail = function (user) {
+            localStorage.set('email', user.email);
+            $scope.noEmail = 0;
+        }
+        //uiid, email, password
     })
 
 
     /********************** MANAGE CATEGORY ******************************/
-    .controller('category', function($scope, $location,queryService, categoryService) {
+    .controller('category', function($scope, $location, queryService, categoryService) {
         
         $scope.saveCategory = function (category) {
             p = !category.parent ? 0 : category.parent;

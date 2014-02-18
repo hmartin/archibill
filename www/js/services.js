@@ -26,34 +26,35 @@ angular.module('starter.services', [])
   }
 })
 
-.service('categoryService', function($rootScope, $q, queryService) {
-    return {
-        getCategories: function () {
-            var deferred = $q.defer();
-            queryService.execute('categorySelectAll', null, function (tx, results) {
-                categories =new Array();
-                for (var i=0; i < results.rows.length; i++){
-                    categories[i]  = results.rows.item(i);
-                }
-                console.log(categories);
-                $rootScope.$apply(function() { deferred.resolve(categories); });
-            });
-            return deferred.promise;
-        }
-    };
-})
-.service('MyService', function($http) {
-    var myData = null;
-    var promise = $http.get('http://izidot.com/json.json').success(function (data) {
-        myData = data;
-    });
-    return {
-        promise:promise,
-        doStuff: function () {
-            return myData;//.getSomeData();
-        }
-    };
-})
+    .service('categoryService', function($rootScope, $q, queryService) {
+        return {
+            getCategories: function () {
+                var deferred = $q.defer();
+                queryService.execute('categorySelectAll', null, function (tx, results) {
+                    categories =new Array();
+                    for (var i=0; i < results.rows.length; i++){
+                        categories[i]  = results.rows.item(i);
+                    }
+                    console.log(categories);
+                    $rootScope.$apply(function() { deferred.resolve(categories); });
+                });
+                return deferred.promise;
+            }
+        };
+    })
+    .service('localStorage', function() {
+        return {
+            get: function (item) {
+                return window.localStorage.getItem(item);
+            },
+            set: function (key, item) {
+                return window.localStorage.setItem(key, item);
+            },
+            remove: function (item) {
+                return window.localStorage.removeItem(item);
+            }
+        };
+    })
     .filter('rootOnly', function() {
         return function( items ) {
             var categories = [];
