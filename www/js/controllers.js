@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['ionic'])
 
-    .controller('home', function($scope, $stateParams, $state, $ionicPlatform, QueryService) {
+    .controller('home', function($scope, $stateParams, $state, $ionicPlatform, queryService) {
 
         $ionicPlatform.ready(function() {
             pictureSource=navigator.camera.PictureSourceType;
@@ -120,6 +120,7 @@ var onSuccessFct = function onSuccess(tx, results) {
 function executeSql (sql, values, onSuccessFct) {
    values = typeof values !== 'undefined' ? values : [];
    onSuccessFct = typeof onSuccessFct !== 'undefined' ? onSuccessFct : 'onSuccessFct';
+   console.log(sql);console.log(values);
    db.transaction(function (tx) {
        tx.executeSql(sql, values, onSuccessFct);
    });
