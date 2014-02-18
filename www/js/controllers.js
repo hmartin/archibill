@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['ionic'])
 
-    .controller('home', function($scope, $stateParams, $state, $ionicPlatform) {
+    .controller('home', function($scope, $stateParams, $state, $ionicPlatform, QueryService) {
 
         $ionicPlatform.ready(function() {
             pictureSource=navigator.camera.PictureSourceType;
@@ -53,7 +53,7 @@ angular.module('starter.controllers', ['ionic'])
 
 
     /********************** MANAGE CATEGORY ******************************/
-    .controller('manage', function($scope, $stateParams, $ionicModal) {
+    .controller('manage', function($scope, $stateParams, $ionicModal, QueryService) {
 
         $ionicModal.fromTemplateUrl('templates/modals/createCategory.html',
             function(modal) { $scope.category = null;$scope.modal = modal; },
