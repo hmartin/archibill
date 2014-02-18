@@ -5,6 +5,7 @@ angular.module('starter.controllers', ['ionic'])
         $ionicPlatform.ready(function() {
             pictureSource=navigator.camera.PictureSourceType;
             destinationType=navigator.camera.DestinationType;
+            alert(destinationType);
         });
 
 
@@ -12,12 +13,12 @@ angular.module('starter.controllers', ['ionic'])
             if (tips) {
                 $location.path('/tab/tips');
             } else {
-                if (typeof navigator.camera != 'undefined') {
+                if (destinationType != 'undefined') {
                     navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
                         quality: 40,
                         correctOrientation: 1,
                         allowEdit: true,
-                        destinationType: navigator.camera.DestinationType.FILE_URI  });
+                        destinationType: DestinationType.FILE_URI  });
                 } else {
                     onPhotoDataSuccess('img/ionic.png');
                 }
