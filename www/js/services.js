@@ -46,7 +46,7 @@ angular.module('starter.services', [])
             return myData;//.getSomeData();
         }
     };
-});
+})
 .filter('ucfirst', function() {
     return function(input, scope) {
         if (input!=null)
