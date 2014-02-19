@@ -2,10 +2,12 @@ angular.module('starter.controllers', ['ionic'])
 
     .controller('home', function($scope, $location, $ionicPlatform, queryService) {
 
+            console.log('ionic home');
         $ionicPlatform.ready(function() {
+            console.log('ionic ready');
             pictureSource=navigator.camera.PictureSourceType;
             destinationType=navigator.camera.DestinationType;
-            alert(destinationType);
+            console.log('ionic ready2');
         });
 
 

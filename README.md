@@ -1,6 +1,13 @@
 archibill
 =========
 
+TODO:
+| Task        | Time           | Done  |
+| ------------- |:-------------:| -----:|
+| pb ready     | right-aligned | $1600 |
+| new v      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
 Archibill
 
 page 1: home => sub header: if not email in red(p4) / no account in orange(p4) / nb doc in green) + menu
