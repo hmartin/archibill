@@ -8,6 +8,9 @@
     <feature name="App">
         <param name="android-package" value="org.apache.cordova.App" />
     </feature>
+    <feature name="Camera">
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
     <name>Archibill</name>
     <description>
        Archibill, archive your bill!
@@ -60,7 +63,4 @@
     <access subdomains="true" uri="*" />
     <access origin="http://127.0.0.1*" />
     <content src="index.html" />
-    <feature name="Camera">
-        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
-    </feature>
 </widget>
