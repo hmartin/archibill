@@ -1,7 +1,7 @@
 # ANDROID / ECLIPSE
 .idea/
 *~
-.cordova/
+
 # built application files
 *.apk
 *.ap_
