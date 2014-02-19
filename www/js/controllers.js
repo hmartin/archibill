@@ -11,6 +11,7 @@ angular.module('starter.controllers', ['ionic'])
                         console.log('ionic ready2');
           });
         $scope.takePicture = function(tips) {
+            $scope.user.dontShowTips = "YES";
             if (!localStorage.get('showTips') && tips) {
                 $location.path('/tab/tips');
             } else {
