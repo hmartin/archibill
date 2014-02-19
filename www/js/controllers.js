@@ -4,18 +4,15 @@ angular.module('starter.controllers', ['ionic'])
         $scope.user = new Array();
         console.log('ionic home');
           $ionicPlatform.ready(function() {
-                        console.log('ionic ready');
-                        pictureSource=navigator.camera.PictureSourceType;
-              console.log('ionic 1');
-                        destinationType=navigator.camera.DestinationType;
-                        console.log('ionic ready2');
+            pictureSource=navigator.camera.PictureSourceType;
+            destinationType=navigator.camera.DestinationType;
+              console.log('ionic ready');
           });
         $scope.takePicture = function(tips) {
-            $scope.user.dontShowTips = "YES";
             if (!localStorage.get('showTips') && tips) {
                 $location.path('/tab/tips');
             } else {
-                if (true || destinationType != 'undefined') {
+                if (typeof destinationType != 'undefined') {
                     console.log(navigator.camera.DestinationType.FILE_URI);
                     navigator.camera.getPicture(onPhotoDataSuccess, null, {
                         quality: 40,

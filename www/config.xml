@@ -53,4 +53,5 @@
     <access origin="http://127.0.0.1*" />
     <content src="index.html" />
     <gap:plugin name="org.apache.cordova.core.camera" />
+    <gap:platform name="android" />
 </widget>
