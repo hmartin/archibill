@@ -4,9 +4,14 @@ angular.module('starter.controllers', ['ionic'])
         $scope.user = new Array();
         console.log('ionic home');
           $ionicPlatform.ready(function() {
+
+              var device = ionic.Platform.platform();
+              console.log(device);
+              if (typeof destinationType != 'undefined') {
             pictureSource=navigator.camera.PictureSourceType;
             destinationType=navigator.camera.DestinationType;
-              console.log('ionic ready');
+              console.log('navigator.camera ready');
+              }
           });
         $scope.takePicture = function(tips) {
             if (!localStorage.get('showTips') && tips) {
@@ -14,7 +19,7 @@ angular.module('starter.controllers', ['ionic'])
             } else {
                 if (typeof destinationType != 'undefined') {
                     console.log(navigator.camera.DestinationType.FILE_URI);
-                    navigator.camera.getPicture(function onPhotoDataSuccess(imageURI) {
+                    navigator.camera.getPicture(function (imageURI) {
                         $scope.uri = imageURI;
                         console.log(imageURI);
                         queryService.execute('imageInsert', [imageURI], insertPhotoSuccess);
@@ -30,7 +35,13 @@ angular.module('starter.controllers', ['ionic'])
                 }
             }
         };
-
+        function onPhotoDataSuccess(imageURI) {
+            $scope.uri = imageURI;
+            console.log(imageURI);
+            queryService.execute('imageInsert', [imageURI], insertPhotoSuccess);
+            /* asynchr post
+             */
+        }
         $scope.showTipsChange = function() {
             localStorage.set('dontShowTips',$scope.user.dontShowTips)
         }
