@@ -1,8 +1,6 @@
 
 <view title="'Options'">
     <content has-header="true" padding="true">
-
-        <div class="card">
             <div class="item item-text-wrap">
 
                 <span ng-if="noEmail" class="assertive" >You need to enter an email to download your backup</span>
@@ -15,12 +13,31 @@
                     </button>
                 </div>
             </div>
-        </div>
-        <div class="list list-inset" >
-            account need WS<br>
-            auto-save<br>
-            Tel/Tel & Internet/Internet<br>
-            wifi only
-        </div>
+            
+            <ul class="list">
+              <li class="item item-toggle">
+                 Save on Cloud
+                 <label class="toggle">
+                   <input type="checkbox">
+                   <div class="track">
+                     <div class="handle"></div>
+                   </div>
+                 </label>
+              </li>
+            </ul>
+            <ul class="list">
+                <li class="item">
+                  Use only wifi (and not 3G cloud back-up
+                </li>
+              <li class="item item-toggle">
+                 Wifi Only
+                 <label class="toggle">
+                   <input type="checkbox">
+                   <div class="track">
+                     <div class="handle"></div>
+                   </div>
+                 </label>
+              </li>
+            </ul>
     </content>
 </view>

@@ -6,10 +6,10 @@ angular.module('starter.controllers', ['ionic'])
                 destinationType=navigator.camera.DestinationType;
                 console.log('ionic ready2');
       })
-    .controller('home', function($scope, $location, $ionicPlatform, queryService) {
+    .controller('home', function($scope, $location, $ionicPlatform, queryService, localStorage) {
 
         $scope.takePicture = function(tips) {
-            if (tips) {
+            if (!localStorage.get('showTips') && tips) {
                 $location.path('/tab/tips');
             } else {
                 if (true || destinationType != 'undefined') {
