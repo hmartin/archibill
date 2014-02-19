@@ -1,19 +1,19 @@
 angular.module('starter.controllers', ['ionic'])
-    .run(function(ionic) {
-      ionic.Platform.ready(function(){
-                console.log('ionic ready');
-                pictureSource=navigator.camera.PictureSourceType;
-                destinationType=navigator.camera.DestinationType;
-                console.log('ionic ready2');
-      })
+
     .controller('home', function($scope, $location, $ionicPlatform, queryService, localStorage) {
 
+          $ionicPlatform.ready(function() {
+                        console.log('ionic ready');
+                        pictureSource=navigator.camera.PictureSourceType;
+                        destinationType=navigator.camera.DestinationType;
+                        console.log('ionic ready2');
+          });
         $scope.takePicture = function(tips) {
             if (!localStorage.get('showTips') && tips) {
                 $location.path('/tab/tips');
             } else {
                 if (true || destinationType != 'undefined') {
-            console.log(navigator.camera.DestinationType.FILE_URI);
+                    console.log(navigator.camera.DestinationType.FILE_URI);
                     navigator.camera.getPicture(onPhotoDataSuccess, null, {
                         quality: 40,
                         correctOrientation: 1,
@@ -25,6 +25,9 @@ angular.module('starter.controllers', ['ionic'])
             }
         };
 
+        $scope.showTipsChange = function(dontShowTips) {
+            localStorage.set('dontShowTips',$scope.user.dontShowTips)
+        }
         function onPhotoDataSuccess(imageURI) {
             $scope.uri = imageURI;
 

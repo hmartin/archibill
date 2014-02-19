@@ -15,24 +15,31 @@
             </div>
             
             <ul class="list">
+                <li class="item">
+                  Options
+                </li>
               <li class="item item-toggle">
                  Save on Cloud
                  <label class="toggle">
-                   <input type="checkbox">
+                   <input type="checkbox" ng-model="user.saveOnCloud">
                    <div class="track">
                      <div class="handle"></div>
                    </div>
                  </label>
               </li>
-            </ul>
-            <ul class="list">
-                <li class="item">
-                  Use only wifi (and not 3G cloud back-up
-                </li>
               <li class="item item-toggle">
-                 Wifi Only
+                 Use only wifi for back-up
                  <label class="toggle">
-                   <input type="checkbox">
+                   <input type="checkbox" ng-model="user.wifiOnly" >
+                   <div class="track">
+                     <div class="handle"></div>
+                   </div>
+                 </label>
+              </li>
+              <li class="item item-toggle">
+                 Show tips
+                 <label class="toggle">
+                   <input type="checkbox" ng-model="user.dontShowTips"  ng-change="showTipsChange()">
                    <div class="track">
                      <div class="handle"></div>
                    </div>

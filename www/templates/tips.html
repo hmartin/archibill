@@ -9,12 +9,28 @@
 </div>
 <view title="'Tips'">
     <content has-header="true" padding="true">
-                <div class="list">
+        <div class="card">
+  <div class="item item-divider">
+   How a successful backup
+  </div>
+  <div class="item item-text-wrap">
+
                     <p>Mettre la facture bien à plat, évitez les plis</p>
-                    <p>Avoir une bonne luminosité uniforme, evitez le flash au maximum</p>
+                    <p>Avoir une bonne luminosité uniforme, eviter le flash</p>
                     <p>2 Mega pixel suffise</p>
-                    <p>Et surtout n'oubliez pas, il faut que tous les éléments soit lisibles</p>
+                    <p>Un doute subsiste, conserver la version papier!</p>
+  </div>
+</div>
+                    <ul class="list">
+
+                  <li class="item item-checkbox">
+                     <label class="checkbox">
+                    <input type="checkbox" ng-model="user.dontShowTips" ng-change="showTipsChange()">
+                     </label>
+                     Don't show this tips next time
+                  </li>
+                </ul>
                     <button class="button button-full button-positive" ng-click="takePicture(0)">Take picture</button>
-                </div>
+
     </content>
 </view>
