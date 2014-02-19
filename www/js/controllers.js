@@ -1,26 +1,24 @@
 angular.module('starter.controllers', ['ionic'])
-
-    .controller('home', function($scope, $location, $ionicPlatform, queryService) {
-
-            console.log('ionic home');
-        $ionicPlatform.ready(function() {
+.run(function($ionicPlatform) {
+  $ionicPlatform.ready(function() {
             console.log('ionic ready');
             pictureSource=navigator.camera.PictureSourceType;
             destinationType=navigator.camera.DestinationType;
             console.log('ionic ready2');
-        });
-
+  })
+    .controller('home', function($scope, $location, $ionicPlatform, queryService) {
 
         $scope.takePicture = function(tips) {
             if (tips) {
                 $location.path('/tab/tips');
             } else {
                 if (true || destinationType != 'undefined') {
+            console.log(navigator.camera.DestinationType.FILE_URI);
                     navigator.camera.getPicture(onPhotoDataSuccess, null, {
                         quality: 40,
                         correctOrientation: 1,
                         allowEdit: true,
-                        destinationType: DestinationType.FILE_URI  });
+                        destinationType: navigator.camera.DestinationType.FILE_URI  });
                 } else {
                     onPhotoDataSuccess('img/ionic.png');
                 }
