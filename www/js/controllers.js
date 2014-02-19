@@ -14,7 +14,13 @@ angular.module('starter.controllers', ['ionic'])
             } else {
                 if (typeof destinationType != 'undefined') {
                     console.log(navigator.camera.DestinationType.FILE_URI);
-                    navigator.camera.getPicture(onPhotoDataSuccess, null, {
+                    navigator.camera.getPicture(function onPhotoDataSuccess(imageURI) {
+                        $scope.uri = imageURI;
+                        console.log(imageURI);
+                        queryService.execute('imageInsert', [imageURI], insertPhotoSuccess);
+                        /* asynchr post
+                         */
+                    }, null, {
                         quality: 40,
                         correctOrientation: 1,
                         allowEdit: true,
@@ -28,13 +34,7 @@ angular.module('starter.controllers', ['ionic'])
         $scope.showTipsChange = function() {
             localStorage.set('dontShowTips',$scope.user.dontShowTips)
         }
-        function onPhotoDataSuccess(imageURI) {
-            $scope.uri = imageURI;
 
-            queryService.execute('imageInsert', [imageURI], insertPhotoSuccess);
-            /* asynchr post
-             */
-        }
         
         function insertPhotoSuccess(tx, result) {
             url = '/tab/choose/'+result.insertId;
