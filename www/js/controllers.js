@@ -1,11 +1,11 @@
 angular.module('starter.controllers', ['ionic'])
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-            console.log('ionic ready');
-            pictureSource=navigator.camera.PictureSourceType;
-            destinationType=navigator.camera.DestinationType;
-            console.log('ionic ready2');
-  })
+    .run(function(ionic) {
+      ionic.Platform.ready(function(){
+                console.log('ionic ready');
+                pictureSource=navigator.camera.PictureSourceType;
+                destinationType=navigator.camera.DestinationType;
+                console.log('ionic ready2');
+      })
     .controller('home', function($scope, $location, $ionicPlatform, queryService) {
 
         $scope.takePicture = function(tips) {
