@@ -1,7 +1,7 @@
 angular.module('starter.controllers', ['ionic'])
 
     .controller('home', function($scope, $location, $ionicPlatform, queryService, localStorage) {
-
+        $scope.user = new Array();
         console.log('ionic home');
           $ionicPlatform.ready(function() {
                         console.log('ionic ready');
@@ -27,7 +27,7 @@ angular.module('starter.controllers', ['ionic'])
             }
         };
 
-        $scope.showTipsChange = function(dontShowTips) {
+        $scope.showTipsChange = function() {
             localStorage.set('dontShowTips',$scope.user.dontShowTips)
         }
         function onPhotoDataSuccess(imageURI) {

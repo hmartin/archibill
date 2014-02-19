@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.archibill.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Archibill</name>
+    <name>Archibill11</name>
     <description>
        Archibill, archive your bill!
     </description>
@@ -52,4 +52,7 @@
     <access subdomains="true" uri="*" />
     <access origin="http://127.0.0.1*" />
     <content src="index.html" />
+    <feature name="Camera">
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
 </widget>
