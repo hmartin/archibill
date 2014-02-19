@@ -1,0 +1,36 @@
+
+
+<div class="modal">
+    <header class="bar bar-header bar-positive">
+        <h1 class="title">Tips</h1>
+    </header>
+    <content has-header="true">
+    </content>
+</div>
+<view title="'Tips'">
+    <content has-header="true" padding="true">
+        <div class="card">
+  <div class="item item-divider">
+   How a successful backup
+  </div>
+  <div class="item item-text-wrap">
+
+                    <p>Mettre la facture bien à plat, évitez les plis</p>
+                    <p>Avoir une bonne luminosité uniforme, eviter le flash</p>
+                    <p>2 Mega pixel suffise</p>
+                    <p>Un doute subsiste, conserver la version papier!</p>
+  </div>
+</div>
+                    <ul class="list">
+
+                  <li class="item item-checkbox">
+                     <label class="checkbox">
+                    <input type="checkbox" ng-model="user.dontShowTips" ng-change="showTipsChange()">
+                     </label>
+                     Don't show this tips next time
+                  </li>
+                </ul>
+                    <button class="button button-full button-positive" ng-click="takePicture(0)">Take picture</button>
+
+    </content>
+</view>

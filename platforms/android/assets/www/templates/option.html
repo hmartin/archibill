@@ -1,0 +1,50 @@
+
+<view title="'Options'">
+    <content has-header="true" padding="true">
+            <div class="item item-text-wrap">
+
+                <span ng-if="noEmail" class="assertive" >You need to enter an email to download your backup</span>
+                <div class="item item-input-inset">
+                    <label class="item-input-wrapper">
+                        <input type="text" ng-model="user.email" name="email" placeholder="Email">
+                    </label>
+                    <button class="button button-small" ng-click="saveEmail(user)">
+                        Save
+                    </button>
+                </div>
+            </div>
+            
+            <ul class="list">
+                <li class="item">
+                  Options
+                </li>
+              <li class="item item-toggle">
+                 Save on Cloud
+                 <label class="toggle">
+                   <input type="checkbox" ng-model="user.saveOnCloud">
+                   <div class="track">
+                     <div class="handle"></div>
+                   </div>
+                 </label>
+              </li>
+              <li class="item item-toggle">
+                 Use only wifi for back-up
+                 <label class="toggle">
+                   <input type="checkbox" ng-model="user.wifiOnly" >
+                   <div class="track">
+                     <div class="handle"></div>
+                   </div>
+                 </label>
+              </li>
+              <li class="item item-toggle">
+                 Show tips
+                 <label class="toggle">
+                   <input type="checkbox" ng-model="user.dontShowTips"  ng-change="showTipsChange()">
+                   <div class="track">
+                     <div class="handle"></div>
+                   </div>
+                 </label>
+              </li>
+            </ul>
+    </content>
+</view>
