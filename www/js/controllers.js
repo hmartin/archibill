@@ -13,26 +13,29 @@ angular.module('starter.controllers', ['ionic'])
               console.log('navigator.camera ready');
               }
           });
-        $scope.takePicture = function(tips) {
+        $scope.showTips = function(tips) {
             if (!localStorage.get('showTips') && tips) {
                 $location.path('/tab/tips');
             } else {
-                if (typeof destinationType != 'undefined') {
-                    console.log(navigator.camera.DestinationType.FILE_URI);
-                    navigator.camera.getPicture(function (imageData) {
-                        $scope.imageData = imageData;
-                        console.log('image success');
-                        queryService.execute('imageInsert', [imageData], insertPhotoSuccess);
-                        /* asynchr post
+                $scope.takePicture();
+            }
+        };
+        $scope.takePicture = function() {
+            if (typeof destinationType != 'undefined') {
+                console.log(navigator.camera.DestinationType.FILE_URI);
+                navigator.camera.getPicture(function (imageData) {
+                    $scope.imageData = imageData;
+                    console.log('image success');
+                    queryService.execute('imageInsert', [imageData], insertPhotoSuccess);
+                    /* asynchr post
                          */
                     }, null, {
-                        quality: 40,
-                        correctOrientation: 1,
-                        allowEdit: true,
-                        destinationType: navigator.camera.DestinationType.FILE_URI  });
-                } else {
-                    onPhotoDataSuccess('img/ionic.png');
-                }
+                    quality: 40,
+                    correctOrientation: 1,
+                    allowEdit: true,
+                    destinationType: navigator.camera.DestinationType.FILE_URI  });
+            } else {
+                onPhotoDataSuccess('img/ionic.png');
             }
         };
         function onPhotoDataSuccess(imageURI) {
@@ -60,20 +63,15 @@ angular.module('starter.controllers', ['ionic'])
              $scope.$apply();
          });
 
-        function upCategories() {
-            categoryService.getCategories().then( function(categories) {
-                $scope.categories =categories;
-            });
-        }
-
         $scope.updateImage = function (image) {
             console.log(image);
             queryService.execute('imageUpdateCategory', [image.name, image.category_id, $scope.image.id]);
             $location.path('/tab/home');
         }
-
-        upCategories();
-
+        
+        categoryService.getCategories().then( function(categories) {
+            $scope.categories =categories;
+        });
     })
 
     .controller('option', function($scope,localStorage, $location) {
@@ -88,7 +86,7 @@ angular.module('starter.controllers', ['ionic'])
             localStorage.set('email', user.email);
             $scope.noEmail = 0;
         }
-        //uiid, email, password
+        //uiid, email
     })
 
 
@@ -105,13 +103,9 @@ angular.module('starter.controllers', ['ionic'])
             queryService.execute('categoryDelete', [id], upCategories);
         }
 
-        function upCategories() {
-            categoryService.getCategories().then( function(categories) {
-                $scope.categories =categories;
-            });
-        }
-
-        upCategories();
+        categoryService.getCategories().then( function(categories) {
+            $scope.categories =categories;
+        });
     })
 
 

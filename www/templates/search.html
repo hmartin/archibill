@@ -1,0 +1,14 @@
+
+
+<view title="'Search Bill'">
+  <content has-header="true"  padding="true">
+      <div class="list">
+              <div ng-repeat="item in categories" class="item item-icon-right">
+                  <span ng-if="item.parent_id" style="margin-left:15px;float:left">&nbsp;</span>
+                  {{ item.name | ucfirst }}
+                  <i class="icon ion-android-trash assertive" ng-click="deleteCategory(item.id)"></i>
+              </div>
+          </div>
+  </content>
+</view>
+
