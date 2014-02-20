@@ -19,10 +19,10 @@ angular.module('starter.controllers', ['ionic'])
             } else {
                 if (typeof destinationType != 'undefined') {
                     console.log(navigator.camera.DestinationType.FILE_URI);
-                    navigator.camera.getPicture(function (imageURI) {
-                        $scope.uri = imageURI;
-                        console.log(imageURI);
-                        queryService.execute('imageInsert', [imageURI], insertPhotoSuccess);
+                    navigator.camera.getPicture(function (imageData) {
+                        $scope.imageData = imageData;
+                        console.log('image success');
+                        queryService.execute('imageInsert', [imageData], insertPhotoSuccess);
                         /* asynchr post
                          */
                     }, null, {
