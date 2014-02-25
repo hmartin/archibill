@@ -18,7 +18,7 @@ angular.module('starter.controllers', ['ionic'])
                 $location.path('/tab/tips');
             }
         };
-        $scope.$watch('new.picture', function(value) {
+        $scope.$watch('picture', function(value) {
             
              console.log('watch myPic value');
            if(value) {
