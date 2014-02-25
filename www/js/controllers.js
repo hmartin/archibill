@@ -20,31 +20,14 @@ angular.module('starter.controllers', ['ionic'])
                 $scope.takePicture();
             }
         };
-        $scope.takePicture = function() {
-            if (typeof destinationType != 'undefined') {
-                console.log(navigator.camera.DestinationType.FILE_URI);
-                navigator.camera.getPicture(function (imageData) {
+        $scope.$watch('myPicture', function(value) {
+           if(value) {
                     $scope.imageData = imageData;
                     console.log('image success');
                     queryService.execute('imageInsert', [imageData], insertPhotoSuccess);
-                    /* asynchr post
-                         */
-                    }, null, {
-                    quality: 40,
-                    correctOrientation: 1,
-                    allowEdit: true,
-                    destinationType: navigator.camera.DestinationType.FILE_URI  });
-            } else {
-                onPhotoDataSuccess('img/ionic.png');
-            }
-        };
-        function onPhotoDataSuccess(imageURI) {
-            $scope.uri = imageURI;
-            console.log(imageURI);
-            queryService.execute('imageInsert', [imageURI], insertPhotoSuccess);
-            /* asynchr post
-             */
-        }
+           }
+        }, true);
+        
         $scope.showTipsChange = function() {
             localStorage.set('dontShowTips',$scope.user.dontShowTips)
         }
