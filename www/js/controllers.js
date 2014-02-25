@@ -19,6 +19,8 @@ angular.module('starter.controllers', ['ionic'])
             }
         };
         $scope.$watch('myPicture', function(value) {
+            
+             console.log('watch myPic value');
            if(value) {
                $scope.imageData = imageData;
                console.log('image success');
