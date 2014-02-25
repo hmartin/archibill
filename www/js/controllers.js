@@ -5,15 +5,15 @@ angular.module('starter.controllers', ['ionic'])
         console.log('ionic home');
           $ionicPlatform.ready(function() {
               var device = ionic.Platform.platform();
-              console.log(device);
+              console.log('device:'+device);
               if (typeof destinationType != 'undefined') {
                   pictureSource=navigator.camera.PictureSourceType;
                   destinationType=navigator.camera.DestinationType;
                   console.log('navigator.camera ready');
               }
           });
-        $scope.showTips = function(tips) {
-        console.log('tips'+tips);
+        $scope.takePicture = function(tips) {
+            console.log('tips'+tips);
             if (true || (!localStorage.get('showTips') && tips)) {
                 $location.path('/tab/tips');
             }
