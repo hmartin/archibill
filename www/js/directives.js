@@ -4,6 +4,7 @@ angular.module('starter.directives', [])
    return {
       restrict: 'A',
       require: 'ngModel',
+      controller: 'home',
       link: function(scope, elm, attrs, ctrl) {
              console.log('directive camera');
          elm.bind('click', function() {
