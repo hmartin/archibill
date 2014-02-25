@@ -21,7 +21,7 @@ angular.module('starter.directives', [])
             } else {
                 scope.$apply(function() {
                     console.log('directive camera bind else apply setValue');
-                    scope.picture = 'img/ionic.png';
+                    scope.picture = Math.random()+'img/ionic.png';
                 });
             }
          });

@@ -14,13 +14,13 @@ angular.module('starter.controllers', ['ionic'])
               }
           });
         $scope.takePicture = function(tips) {
-            console.log('tips'+tips);
+            console.log('tips display:'+tips);
             if (true || (!localStorage.get('showTips') && tips)) {
                 $location.path('/tab/tips');
             }
         };
         $scope.$watch('picture', function(value) {
-             console.log('watch myPic value');
+           console.log('watch myPic value');
            if(value && value != '-') {
                $scope.imageData = value;
                console.log('image success');
