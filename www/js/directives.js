@@ -14,7 +14,7 @@ angular.module('starter.directives', [])
                 }, function (err) {
                    ctrl.$setValidity('error', false);
                 }, { quality: 50, destinationType: Camera.DestinationType.FILE_URI })
-            else {
+            } else {
                ctrl.$setViewValue('img/ionic.png');
             }
          });
