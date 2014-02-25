@@ -11,8 +11,9 @@ angular.module('starter.directives', [])
             if (typeof destinationType != 'undefined') {
              console.log('getPic');
                 navigator.camera.getPicture(function (imageURI) {
-                   scope.$apply(function() {
-                      ctrl.$setViewValue(imageURI);
+                   scope.$apply(function() {                    
+                       console.log('directive camera bind if apply setValue');
+                      scope.picture = imageURI;
                    });
                 }, function (err) {
                    ctrl.$setValidity('error', false);
@@ -20,7 +21,7 @@ angular.module('starter.directives', [])
             } else {
                 scope.$apply(function() {
                     console.log('directive camera bind else apply setValue');
-                    scope.picture = Math.random()+'img/ionic.png';
+                    scope.picture = 'img/ionic.png';
                 });
             }
          });
