@@ -2,7 +2,7 @@ angular.module('starter.controllers', ['ionic'])
 
     .controller('home', function($scope, $location, $ionicPlatform, queryService, localStorage) {
         $scope.user = new Array();
-          $scope.picture = '-';
+          $scope.picture = "angular";
         console.log('ionic home');
           $ionicPlatform.ready(function() {
               var device = ionic.Platform.platform();
