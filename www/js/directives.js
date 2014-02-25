@@ -4,7 +4,6 @@ angular.module('starter.directives', [])
    return {
       restrict: 'A',
       require: 'ngModel',
-      controller: 'home',
       link: function(scope, elm, attrs, ctrl) {
              console.log('directive camera');
          elm.bind('click', function() {
@@ -19,7 +18,7 @@ angular.module('starter.directives', [])
                    ctrl.$setValidity('error', false);
                 }, { quality: 50, destinationType: Camera.DestinationType.FILE_URI })
             } else {
-                ctrl.savePicture('img/ionic.png');
+                scope.savePicture('img/ionic.png');
             }
          });
       }
