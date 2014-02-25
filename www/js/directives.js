@@ -4,21 +4,21 @@ angular.module('starter.directives', [])
    return {
       restrict: 'A',
       require: 'ngModel',
-      link: function(scope, elm, attrs, ctrl) {
+      link: function($scope, elm, attrs, ctrl) {
              console.log('directive camera');
          elm.bind('click', function() {
              console.log('directive camera bind');
             if (typeof destinationType != 'undefined') {
              console.log('getPic');
                 navigator.camera.getPicture(function (imageURI) {
-                   scope.$apply(function() {
+                   $scope.$apply(function() {
                       ctrl.$setViewValue(imageURI);
                    });
                 }, function (err) {
                    ctrl.$setValidity('error', false);
                 }, { quality: 50, destinationType: Camera.DestinationType.FILE_URI })
             } else {
-                scope.savePicture('img/ionic.png');
+                $scope.savePicture('img/ionic.png');
             }
          });
       }
