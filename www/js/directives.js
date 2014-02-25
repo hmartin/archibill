@@ -5,7 +5,9 @@ angular.module('starter.directives', [])
       restrict: 'A',
       require: 'ngModel',
       link: function(scope, elm, attrs, ctrl) {
+             console.log('directive camera');
          elm.bind('click', function() {
+             console.log('directive camera bind');
             if (typeof destinationType != 'undefined') {
                 navigator.camera.getPicture(function (imageURI) {
                    scope.$apply(function() {
