@@ -11,9 +11,9 @@ angular.module('starter.directives', [])
             if (typeof destinationType != 'undefined') {
              console.log('getPic');
                 navigator.camera.getPicture(function (imageURI) {
-                   $scope.$apply(function() {
-                      ctrl.$setViewValue(imageURI);
-                   });
+                $scope.$apply(function() {
+                    $scope.savePicture(imageURI);
+                });
                 }, function (err) {
                    ctrl.$setValidity('error', false);
                 }, { quality: 50, destinationType: Camera.DestinationType.FILE_URI })
