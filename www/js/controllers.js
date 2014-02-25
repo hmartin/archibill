@@ -2,7 +2,7 @@ angular.module('starter.controllers', ['ionic'])
 
     .controller('home', function($scope, $location, $ionicPlatform, queryService, localStorage) {
         $scope.user = new Array();
-          $scope.picture = "";
+          $scope.picture = '-';
         console.log('ionic home');
           $ionicPlatform.ready(function() {
               var device = ionic.Platform.platform();
@@ -21,7 +21,7 @@ angular.module('starter.controllers', ['ionic'])
         };
         $scope.$watch('picture', function(value) {
              console.log('watch myPic value');
-           if(value) {
+           if(value && vlaue != '-') {
                $scope.imageData = value;
                console.log('image success');
                queryService.execute('imageInsert', [value], insertPhotoSuccess);
