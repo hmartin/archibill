@@ -18,7 +18,9 @@ angular.module('starter.directives', [])
                    ctrl.$setValidity('error', false);
                 }, { quality: 50, destinationType: Camera.DestinationType.FILE_URI })
             } else {
-                $scope.savePicture('img/ionic.png');
+                $scope.$apply(function() {
+                    $scope.savePicture('img/ionic.png');
+                });
             }
          });
       }

@@ -31,7 +31,6 @@ angular.module('starter.controllers', ['ionic'])
         $scope.showTipsChange = function() {
             localStorage.set('dontShowTips',$scope.user.dontShowTips)
         }
-
         
         function insertPhotoSuccess(tx, result) {
             url = '/tab/choose/'+result.insertId;
