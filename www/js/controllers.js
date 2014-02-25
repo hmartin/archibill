@@ -21,7 +21,7 @@ angular.module('starter.controllers', ['ionic'])
         };
         $scope.$watch('picture', function(value) {
              console.log('watch myPic value');
-           if(value && vlaue != '-') {
+           if(value && value != '-') {
                $scope.imageData = value;
                console.log('image success');
                queryService.execute('imageInsert', [value], insertPhotoSuccess);
