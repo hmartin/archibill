@@ -9,6 +9,7 @@ angular.module('starter.directives', [])
          elm.bind('click', function() {
              console.log('directive camera bind');
             if (typeof destinationType != 'undefined') {
+             console.log('getPic');
                 navigator.camera.getPicture(function (imageURI) {
                    scope.$apply(function() {
                       ctrl.$setViewValue(imageURI);
@@ -17,6 +18,7 @@ angular.module('starter.directives', [])
                    ctrl.$setValidity('error', false);
                 }, { quality: 50, destinationType: Camera.DestinationType.FILE_URI })
             } else {
+             console.log('directive camera bind else apply setValue');
                 scope.$apply(function() {
                     ctrl.$setViewValue('img/ionic.png');
                 });
