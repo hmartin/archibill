@@ -26,7 +26,7 @@ angular.module('starter.controllers', ['ionic'])
                console.log('image success');
                queryService.execute('imageInsert', [imageData], insertPhotoSuccess);
            }
-        }, true);
+        });
         
         $scope.showTipsChange = function() {
             localStorage.set('dontShowTips',$scope.user.dontShowTips)
