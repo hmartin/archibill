@@ -11,9 +11,8 @@ angular.module('starter.directives', [])
             if (typeof destinationType != 'undefined') {
              console.log('getPic');
                 navigator.camera.getPicture(function (imageURI) {
-                   scope.$apply(function() {                    
-                       console.log('directive camera bind if apply setValue');
-                      scope.picture = imageURI;
+                   scope.$apply(function() {
+                      ctrl.$setViewValue(imageURI);
                    });
                 }, function (err) {
                    ctrl.$setValidity('error', false);
