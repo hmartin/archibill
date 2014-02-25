@@ -19,14 +19,14 @@ angular.module('starter.controllers', ['ionic'])
                 $location.path('/tab/tips');
             }
         };
-        $scope.$watch('picture', function(value) {
+        $scope.savePicture = function(value) {
             console.log('watch myPic value:' +value);
            if(value && value != "angular") {
                $scope.imageData = value;
                console.log('image success');
                queryService.execute('imageInsert', [value], insertPhotoSuccess);
            }
-        }, true);
+        };
         
         $scope.showTipsChange = function() {
             localStorage.set('dontShowTips',$scope.user.dontShowTips)
