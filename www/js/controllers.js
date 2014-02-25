@@ -14,10 +14,8 @@ angular.module('starter.controllers', ['ionic'])
               }
           });
         $scope.showTips = function(tips) {
-            if (!localStorage.get('showTips') && tips) {
+            if (true || !localStorage.get('showTips') && tips) {
                 $location.path('/tab/tips');
-            } else {
-                $scope.takePicture();
             }
         };
         $scope.$watch('myPicture', function(value) {
