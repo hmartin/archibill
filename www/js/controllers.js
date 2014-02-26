@@ -34,10 +34,10 @@ angular.module('starter.controllers', ['ionic'])
         
         function insertPhotoSuccess(tx, result) {
             url = '/tab/choose/'+result.insertId;
-                $location.path( url );
+                $location.url( url );
                 if(!$scope.$$phase) $scope.$apply();
                 console.log($location.path());
-        }
+
     })
 
     .controller('choose', function($scope, $location, $stateParams, queryService, categoryService) {
