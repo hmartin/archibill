@@ -46,8 +46,9 @@ angular.module('starter.controllers', ['ionic'])
 
     .controller('choose', function($scope, $location, $stateParams, queryService, categoryService) {
          queryService.execute('imageSelect', [$stateParams.iid], function querySuccess(tx, results) {
-             $scope.image = angular.copy(results.rows.item(0));
-             $scope.$apply();
+             $scope.$apply(function() {
+                 $scope.image = angular.copy(results.rows.item(0));
+             });
          });
 
         $scope.updateImage = function (image) {
@@ -95,6 +96,17 @@ angular.module('starter.controllers', ['ionic'])
         });
     })
 
+    /********************** MANAGE CATEGORY ******************************/
+    .controller('search', function($scope, $location, queryService, imageService) {
+
+        $scope.deleteImage = function (id) {
+            queryService.execute('categoryImage', [id], upCategories);
+        }
+
+        imageService.getImages().then( function(images) {
+            $scope.images =images;
+        });
+    })
 
     .controller('send', function($scope,queryService) {
 

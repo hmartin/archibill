@@ -11,6 +11,7 @@ angular.module('starter.services', [])
         imageCreate: 'CREATE TABLE IF NOT EXISTS Image (id INTEGER PRIMARY KEY AUTOINCREMENT, name, uri, category_id)',
         imageInsert: 'INSERT INTO Image (uri, category_id) VALUES (?,0)',
         imageSelect: 'SELECT * FROM Image WHERE id = ? ',
+        imageSelectAll: 'SELECT * FROM Image ORDER BY name',
         imageUpdateCategory: 'UPDATE Image SET name = ? , category_id = ? WHERE id = ? '
     };
     
@@ -19,14 +20,9 @@ angular.module('starter.services', [])
           var db = window.openDatabase("Checkbill", "1.0", "Checkbill Info", 200000);
           values = typeof values !== 'undefined' ? values : null;
           onSuccessFct = typeof onSuccessFct !== 'undefined' ? onSuccessFct : null;
-          console.log('tmp2');
-          //console.log(values);
           console.log(queries[queryId]);
-          //console.log(db);
           db.transaction(function (tx) {
-              console.log('transac ok');
               tx.executeSql(queries[queryId], values, onSuccessFct);
-              console.log('q success');
           });
       }
   }
@@ -43,6 +39,22 @@ angular.module('starter.services', [])
                     }
                     console.log(categories);
                     $rootScope.$apply(function() { deferred.resolve(categories); });
+                });
+                return deferred.promise;
+            }
+        };
+    })
+    .service('imageService', function($rootScope, $q, queryService) {
+        return {
+            getImages: function () {
+                var deferred = $q.defer();
+                queryService.execute('imageSelectAll', null, function (tx, results) {
+                    images =new Array();
+                    for (var i=0; i < results.rows.length; i++){
+                        images[i]  = results.rows.item(i);
+                    }
+                    console.log(images);
+                    $rootScope.$apply(function() { deferred.resolve(images); });
                 });
                 return deferred.promise;
             }
