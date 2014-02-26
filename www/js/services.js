@@ -20,9 +20,9 @@ angular.module('starter.services', [])
           values = typeof values !== 'undefined' ? values : null;
           onSuccessFct = typeof onSuccessFct !== 'undefined' ? onSuccessFct : null;
           console.log('tmp2');
-          console.log(values);
+          //console.log(values);
           console.log(queries[queryId]);
-          console.log(db);
+          //console.log(db);
           db.transaction(function (tx) {
               console.log('transac ok');
               tx.executeSql(queries[queryId], values, onSuccessFct);
