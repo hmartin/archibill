@@ -39,6 +39,7 @@ angular.module('starter.controllers', ['ionic'])
                 if(!$scope.$$phase) $scope.$apply();
                 console.log('real: '+$location.path());
             });
+        }
 
     })
 
