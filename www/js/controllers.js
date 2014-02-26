@@ -34,6 +34,7 @@ angular.module('starter.controllers', ['ionic'])
         
         function insertPhotoSuccess(tx, result) {
             url = '/tab/choose/'+result.insertId;
+                console.log('real: '+url);
             $scope.$apply(function() {
                 $location.path( url );
                 if(!$scope.$$phase) $scope.$apply();
