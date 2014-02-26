@@ -1,7 +1,6 @@
 angular.module('starter.services', [])
 
 .factory('queryService', function() {
-    var db = window.openDatabase("Checkbill", "1.0", "Checkbill Info", 200000);
     var queries = {
         categoryDrop: 'DROP TABLE IF EXISTS Category',
         categoryCreate: 'CREATE TABLE IF NOT EXISTS Category (id INTEGER PRIMARY KEY AUTOINCREMENT, name, parent_id)',
@@ -17,6 +16,7 @@ angular.module('starter.services', [])
     
   return {
       execute: function(queryId, values, onSuccessFct) {
+          var db = window.openDatabase("Checkbill", "1.0", "Checkbill Info", 200000);
           values = typeof values !== 'undefined' ? values : null;
           onSuccessFct = typeof onSuccessFct !== 'undefined' ? onSuccessFct : null;
           console.log(queries[queryId]);console.log(values);
