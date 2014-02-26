@@ -8,7 +8,7 @@ angular.module('starter.directives', [])
              console.log('directive camera');
          elm.bind('click', function() {
              console.log('directive camera bind');
-            if (typeof destinationType != 'undefined') {
+            if (typeof navigator.camera != 'undefined') {
              console.log('getPic');
                 navigator.camera.getPicture(function (imageURI) {
                 $scope.$apply(function() {
