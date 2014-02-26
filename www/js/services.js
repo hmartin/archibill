@@ -19,6 +19,7 @@ angular.module('starter.services', [])
           var db = window.openDatabase("Checkbill", "1.0", "Checkbill Info", 200000);
           values = typeof values !== 'undefined' ? values : null;
           onSuccessFct = typeof onSuccessFct !== 'undefined' ? onSuccessFct : null;
+          console.log('tmp');
           console.log(queries[queryId]);console.log(values);
           console.log(db);
           db.transaction(function (tx) {
