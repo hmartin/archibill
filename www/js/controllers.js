@@ -2,6 +2,7 @@ angular.module('starter.controllers', ['ionic'])
 
     .controller('home', function($scope, $location, $ionicPlatform, queryService, localStorage) {
         $scope.user = new Array();
+        $scope.user.dontShowTips = "0";
           $scope.picture = "angular";
         console.log('ionic home');
           $ionicPlatform.ready(function() {
