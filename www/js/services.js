@@ -70,6 +70,20 @@ angular.module('starter.services', [])
             },
             remove: function (item) {
                 return window.localStorage.removeItem(item);
+            },
+            init: function() {
+                user = new Array();
+                var items = [ 'dontShowTips', 'email','wifiOnly', 'saveOnCloud' ];
+
+                angular.forEach(items, function(item) {
+                    v = window.localStorage.getItem(item);
+                    v = v == "true" ? true: v;
+                    v = v != "false" ? v: false;
+                    user[item] = v;
+                });
+
+                console.log(user);
+                return user
             }
         };
     })

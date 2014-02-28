@@ -25,14 +25,11 @@
 
                   <li class="item item-checkbox">
                      <label class="checkbox">
-                    <input type="checkbox" ng-model="user.dontShowTips" ng-change="showTipsChange()" >
+                    <input type="checkbox" ng-model="user.dontShowTips" ng-change="saveChange()" >
                      </label>
                      Don't show this tips next time
                   </li>
                 </ul>
         <button class="button button-full button-positive" camera ng-model='button.picture'>Take Picture</button>
-        
-          <input ng-model="picture" />
-        {{ picture }}
     </content>
 </view>

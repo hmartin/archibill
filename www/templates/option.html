@@ -8,7 +8,7 @@
                     <label class="item-input-wrapper">
                         <input type="email" ng-model="user.email" name="email" placeholder="Email">
                     </label>
-                    <button class="button button-small" ng-click="saveEmail(user)">
+                    <button class="button button-small" ng-click="saveChange('email')">
                         Save
                     </button>
                 </div>
@@ -21,7 +21,7 @@
               <li class="item item-toggle">
                  Save on Cloud
                  <label class="toggle">
-                   <input type="checkbox" ng-model="user.saveOnCloud">
+                   <input type="checkbox" ng-model="user.saveOnCloud" ng-change="saveChange('saveOnCloud')" >
                    <div class="track">
                      <div class="handle"></div>
                    </div>
@@ -30,16 +30,16 @@
               <li class="item item-toggle">
                  Use only wifi for back-up
                  <label class="toggle">
-                   <input type="checkbox" ng-model="user.wifiOnly" >
+                   <input type="checkbox" ng-model="user.wifiOnly"  ng-change="saveChange('wifiOnly')" >
                    <div class="track">
                      <div class="handle"></div>
                    </div>
                  </label>
               </li>
               <li class="item item-toggle">
-                 Show tips
+                 Don't show tips
                  <label class="toggle">
-                   <input type="checkbox" ng-model="user.dontShowTips"  ng-change="showTipsChange()">
+                   <input type="checkbox" ng-model="user.dontShowTips"  ng-change="saveChange('dontShowTips')">
                    <div class="track">
                      <div class="handle"></div>
                    </div>

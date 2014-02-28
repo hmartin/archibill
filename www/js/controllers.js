@@ -1,8 +1,6 @@
 angular.module('starter.controllers', ['ionic'])
 
     .controller('home', function($scope, $location, $ionicPlatform, queryService, localStorage) {
-        $scope.user = new Array();
-        $scope.user.dontShowTips = "0";
           $scope.picture = "angular";
         console.log('ionic home');
           $ionicPlatform.ready(function() {
@@ -29,10 +27,6 @@ angular.module('starter.controllers', ['ionic'])
            }
         };
         
-        $scope.showTipsChange = function() {
-            localStorage.set('dontShowTips',$scope.user.dontShowTips)
-        }
-        
         function insertPhotoSuccess(tx, result) {
             url = '/tab/choose/'+result.insertId;
                 console.log('real: '+url);
@@ -43,6 +37,11 @@ angular.module('starter.controllers', ['ionic'])
             });
         }
 
+        $scope.saveChange = function(key) {
+            localStorage.set(key,$scope.user[key])
+        }
+
+        $scope.user = localStorage.init();
     })
 
     .controller('choose', function($scope, $location, $stateParams, queryService, categoryService) {
@@ -62,22 +61,6 @@ angular.module('starter.controllers', ['ionic'])
             $scope.categories =categories;
         });
     })
-
-    .controller('option', function($scope,localStorage, $location) {
-        $scope.user = new Array();
-        if (localStorage.get("email")) {
-            $scope.user.email = localStorage.get("email");
-        } else {
-            $scope.noEmail = 1;
-        }
-
-        $scope.saveEmail = function (user) {
-            localStorage.set('email', user.email);
-            $scope.noEmail = 0;
-        }
-        //uiid, email
-    })
-
 
     /********************** MANAGE CATEGORY ******************************/
     .controller('category', function($scope, $location, queryService, categoryService) {
