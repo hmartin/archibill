@@ -2,10 +2,15 @@ archibill
 =========
 
 TODO:
-update ionic
-test ready with config.xml...
-Save photo
-Add home button browse bill
+*update ionic
+*test ready with config.xml...
+*Save photo
+*Add home button browse bill
+sava data not url
+Display micro pics in search
+add search by name 
+add search by cat
+create ws
 
 Archibill
 

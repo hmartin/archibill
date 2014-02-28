@@ -1,8 +1,6 @@
-/* Your app's CSS, go crazy, make it your own */
 
-.ionic-logo {
-  display: block;
-  margin: 15px auto;
-  width: 96px;
-  height: 96px;
+body {
+    background-image: url(../img/fond.jpg);
+    background-position: center bottom;
+    background-size: 100% auto;
 }
