@@ -4,7 +4,7 @@ angular.module('starter.controllers', ['ionic'])
           $scope.picture = "angular";
         console.log('ionic home');
           $ionicPlatform.ready(function() {
-              var device = ionic.Platform.platform();
+              var device = ionic.Platform.device();
               console.log('device:'+device);
               if (typeof destinationType != 'undefined') {
                   pictureSource=navigator.camera.PictureSourceType;
